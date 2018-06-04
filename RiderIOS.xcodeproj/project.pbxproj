@@ -1,0 +1,582 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		043E111920C4DA7700FCEC59 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 043E111820C4DA7700FCEC59 /* AppDelegate.m */; };
+		043E111C20C4DA7700FCEC59 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043E111B20C4DA7700FCEC59 /* ViewController.m */; };
+		043E111F20C4DA7700FCEC59 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 043E111D20C4DA7700FCEC59 /* Main.storyboard */; };
+		043E112120C4DA7900FCEC59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 043E112020C4DA7900FCEC59 /* Assets.xcassets */; };
+		043E112420C4DA7900FCEC59 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 043E112220C4DA7900FCEC59 /* LaunchScreen.storyboard */; };
+		043E112720C4DA7900FCEC59 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 043E112620C4DA7900FCEC59 /* main.m */; };
+		043E113120C4DA7900FCEC59 /* RiderIOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 043E113020C4DA7900FCEC59 /* RiderIOSTests.m */; };
+		043E113C20C4DA7900FCEC59 /* RiderIOSUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 043E113B20C4DA7900FCEC59 /* RiderIOSUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		043E112D20C4DA7900FCEC59 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 043E110C20C4DA7700FCEC59 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 043E111320C4DA7700FCEC59;
+			remoteInfo = RiderIOS;
+		};
+		043E113820C4DA7900FCEC59 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 043E110C20C4DA7700FCEC59 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 043E111320C4DA7700FCEC59;
+			remoteInfo = RiderIOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		043E111420C4DA7700FCEC59 /* RiderIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RiderIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		043E111720C4DA7700FCEC59 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		043E111820C4DA7700FCEC59 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		043E111A20C4DA7700FCEC59 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		043E111B20C4DA7700FCEC59 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		043E111E20C4DA7700FCEC59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		043E112020C4DA7900FCEC59 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		043E112320C4DA7900FCEC59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		043E112520C4DA7900FCEC59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		043E112620C4DA7900FCEC59 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		043E112C20C4DA7900FCEC59 /* RiderIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RiderIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		043E113020C4DA7900FCEC59 /* RiderIOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RiderIOSTests.m; sourceTree = "<group>"; };
+		043E113220C4DA7900FCEC59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		043E113720C4DA7900FCEC59 /* RiderIOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RiderIOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		043E113B20C4DA7900FCEC59 /* RiderIOSUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RiderIOSUITests.m; sourceTree = "<group>"; };
+		043E113D20C4DA7900FCEC59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		043E111120C4DA7700FCEC59 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		043E112920C4DA7900FCEC59 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		043E113420C4DA7900FCEC59 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		043E110B20C4DA7700FCEC59 = {
+			isa = PBXGroup;
+			children = (
+				043E111620C4DA7700FCEC59 /* RiderIOS */,
+				043E112F20C4DA7900FCEC59 /* RiderIOSTests */,
+				043E113A20C4DA7900FCEC59 /* RiderIOSUITests */,
+				043E111520C4DA7700FCEC59 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		043E111520C4DA7700FCEC59 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				043E111420C4DA7700FCEC59 /* RiderIOS.app */,
+				043E112C20C4DA7900FCEC59 /* RiderIOSTests.xctest */,
+				043E113720C4DA7900FCEC59 /* RiderIOSUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		043E111620C4DA7700FCEC59 /* RiderIOS */ = {
+			isa = PBXGroup;
+			children = (
+				043E111720C4DA7700FCEC59 /* AppDelegate.h */,
+				043E111820C4DA7700FCEC59 /* AppDelegate.m */,
+				043E111A20C4DA7700FCEC59 /* ViewController.h */,
+				043E111B20C4DA7700FCEC59 /* ViewController.m */,
+				043E111D20C4DA7700FCEC59 /* Main.storyboard */,
+				043E112020C4DA7900FCEC59 /* Assets.xcassets */,
+				043E112220C4DA7900FCEC59 /* LaunchScreen.storyboard */,
+				043E112520C4DA7900FCEC59 /* Info.plist */,
+				043E112620C4DA7900FCEC59 /* main.m */,
+			);
+			path = RiderIOS;
+			sourceTree = "<group>";
+		};
+		043E112F20C4DA7900FCEC59 /* RiderIOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				043E113020C4DA7900FCEC59 /* RiderIOSTests.m */,
+				043E113220C4DA7900FCEC59 /* Info.plist */,
+			);
+			path = RiderIOSTests;
+			sourceTree = "<group>";
+		};
+		043E113A20C4DA7900FCEC59 /* RiderIOSUITests */ = {
+			isa = PBXGroup;
+			children = (
+				043E113B20C4DA7900FCEC59 /* RiderIOSUITests.m */,
+				043E113D20C4DA7900FCEC59 /* Info.plist */,
+			);
+			path = RiderIOSUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		043E111320C4DA7700FCEC59 /* RiderIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 043E114020C4DA7900FCEC59 /* Build configuration list for PBXNativeTarget "RiderIOS" */;
+			buildPhases = (
+				043E111020C4DA7700FCEC59 /* Sources */,
+				043E111120C4DA7700FCEC59 /* Frameworks */,
+				043E111220C4DA7700FCEC59 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RiderIOS;
+			productName = RiderIOS;
+			productReference = 043E111420C4DA7700FCEC59 /* RiderIOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		043E112B20C4DA7900FCEC59 /* RiderIOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 043E114320C4DA7900FCEC59 /* Build configuration list for PBXNativeTarget "RiderIOSTests" */;
+			buildPhases = (
+				043E112820C4DA7900FCEC59 /* Sources */,
+				043E112920C4DA7900FCEC59 /* Frameworks */,
+				043E112A20C4DA7900FCEC59 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				043E112E20C4DA7900FCEC59 /* PBXTargetDependency */,
+			);
+			name = RiderIOSTests;
+			productName = RiderIOSTests;
+			productReference = 043E112C20C4DA7900FCEC59 /* RiderIOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		043E113620C4DA7900FCEC59 /* RiderIOSUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 043E114620C4DA7900FCEC59 /* Build configuration list for PBXNativeTarget "RiderIOSUITests" */;
+			buildPhases = (
+				043E113320C4DA7900FCEC59 /* Sources */,
+				043E113420C4DA7900FCEC59 /* Frameworks */,
+				043E113520C4DA7900FCEC59 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				043E113920C4DA7900FCEC59 /* PBXTargetDependency */,
+			);
+			name = RiderIOSUITests;
+			productName = RiderIOSUITests;
+			productReference = 043E113720C4DA7900FCEC59 /* RiderIOSUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		043E110C20C4DA7700FCEC59 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = Han;
+				TargetAttributes = {
+					043E111320C4DA7700FCEC59 = {
+						CreatedOnToolsVersion = 9.4;
+					};
+					043E112B20C4DA7900FCEC59 = {
+						CreatedOnToolsVersion = 9.4;
+						TestTargetID = 043E111320C4DA7700FCEC59;
+					};
+					043E113620C4DA7900FCEC59 = {
+						CreatedOnToolsVersion = 9.4;
+						TestTargetID = 043E111320C4DA7700FCEC59;
+					};
+				};
+			};
+			buildConfigurationList = 043E110F20C4DA7700FCEC59 /* Build configuration list for PBXProject "RiderIOS" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 043E110B20C4DA7700FCEC59;
+			productRefGroup = 043E111520C4DA7700FCEC59 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				043E111320C4DA7700FCEC59 /* RiderIOS */,
+				043E112B20C4DA7900FCEC59 /* RiderIOSTests */,
+				043E113620C4DA7900FCEC59 /* RiderIOSUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		043E111220C4DA7700FCEC59 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				043E112420C4DA7900FCEC59 /* LaunchScreen.storyboard in Resources */,
+				043E112120C4DA7900FCEC59 /* Assets.xcassets in Resources */,
+				043E111F20C4DA7700FCEC59 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		043E112A20C4DA7900FCEC59 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		043E113520C4DA7900FCEC59 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		043E111020C4DA7700FCEC59 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				043E111C20C4DA7700FCEC59 /* ViewController.m in Sources */,
+				043E112720C4DA7900FCEC59 /* main.m in Sources */,
+				043E111920C4DA7700FCEC59 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		043E112820C4DA7900FCEC59 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				043E113120C4DA7900FCEC59 /* RiderIOSTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		043E113320C4DA7900FCEC59 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				043E113C20C4DA7900FCEC59 /* RiderIOSUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		043E112E20C4DA7900FCEC59 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 043E111320C4DA7700FCEC59 /* RiderIOS */;
+			targetProxy = 043E112D20C4DA7900FCEC59 /* PBXContainerItemProxy */;
+		};
+		043E113920C4DA7900FCEC59 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 043E111320C4DA7700FCEC59 /* RiderIOS */;
+			targetProxy = 043E113820C4DA7900FCEC59 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		043E111D20C4DA7700FCEC59 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				043E111E20C4DA7700FCEC59 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		043E112220C4DA7900FCEC59 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				043E112320C4DA7900FCEC59 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		043E113E20C4DA7900FCEC59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		043E113F20C4DA7900FCEC59 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		043E114120C4DA7900FCEC59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W9GMM3436J;
+				INFOPLIST_FILE = RiderIOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zgpjtwlsj.RiderIOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		043E114220C4DA7900FCEC59 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W9GMM3436J;
+				INFOPLIST_FILE = RiderIOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zgpjtwlsj.RiderIOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		043E114420C4DA7900FCEC59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W9GMM3436J;
+				INFOPLIST_FILE = RiderIOSTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zgpjtwlsj.RiderIOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RiderIOS.app/RiderIOS";
+			};
+			name = Debug;
+		};
+		043E114520C4DA7900FCEC59 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W9GMM3436J;
+				INFOPLIST_FILE = RiderIOSTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zgpjtwlsj.RiderIOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RiderIOS.app/RiderIOS";
+			};
+			name = Release;
+		};
+		043E114720C4DA7900FCEC59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W9GMM3436J;
+				INFOPLIST_FILE = RiderIOSUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zgpjtwlsj.RiderIOSUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RiderIOS;
+			};
+			name = Debug;
+		};
+		043E114820C4DA7900FCEC59 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W9GMM3436J;
+				INFOPLIST_FILE = RiderIOSUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zgpjtwlsj.RiderIOSUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RiderIOS;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		043E110F20C4DA7700FCEC59 /* Build configuration list for PBXProject "RiderIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				043E113E20C4DA7900FCEC59 /* Debug */,
+				043E113F20C4DA7900FCEC59 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		043E114020C4DA7900FCEC59 /* Build configuration list for PBXNativeTarget "RiderIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				043E114120C4DA7900FCEC59 /* Debug */,
+				043E114220C4DA7900FCEC59 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		043E114320C4DA7900FCEC59 /* Build configuration list for PBXNativeTarget "RiderIOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				043E114420C4DA7900FCEC59 /* Debug */,
+				043E114520C4DA7900FCEC59 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		043E114620C4DA7900FCEC59 /* Build configuration list for PBXNativeTarget "RiderIOSUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				043E114720C4DA7900FCEC59 /* Debug */,
+				043E114820C4DA7900FCEC59 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 043E110C20C4DA7700FCEC59 /* Project object */;
+}
