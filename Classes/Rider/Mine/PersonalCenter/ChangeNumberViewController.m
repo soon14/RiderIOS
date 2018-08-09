@@ -20,7 +20,7 @@
 }
 @property (nonatomic, weak)IBOutlet UITextField *nameField;
 @property (nonatomic, weak) IBOutlet UITextField *pwdField;
-@property (nonatomic, strong)  AppContextManager *appMger;
+@property (nonatomic, strong) AppContextManager *appMger;
 @property(nonatomic,strong) MBProgressHUD *hubView;
 @end
 
@@ -71,6 +71,7 @@
     }
 }
 
+//获取手机信息验证码
 - (void)verificationCodeRequest
 {
     
@@ -117,6 +118,7 @@
     }];
 }
 
+//绑定手机号
 - (void)loginRequest
 {
     [self.hubView showAnimated:YES];
