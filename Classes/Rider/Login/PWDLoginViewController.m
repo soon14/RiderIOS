@@ -78,6 +78,7 @@
             self.appMger.userPhone = [listDic valueForKey:@"mobile"];
             self.appMger.bond_money = [listDic valueForKey:@"bond_money"];
             self.appMger.balance = [listDic valueForKey:@"balance"];
+            self.appMger.userName = [listDic valueForKey:@"name"];
             self.appMger.photo = [[listDic valueForKey:@"photo"] objectAtIndex:0];
             self.appMger.photo_front = [[listDic valueForKey:@"photo_front"] objectAtIndex:0];
             self.appMger.riderID = [listDic valueForKey:@"id"];

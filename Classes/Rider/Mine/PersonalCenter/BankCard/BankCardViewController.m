@@ -8,6 +8,8 @@
 
 #import "BankCardViewController.h"
 #import "BankCardTableViewCell.h"
+#import "AddBankCardViewController.h"
+#import "UntieCardViewController.h"
 
 static NSString *const cellIndentifier = @"BankCardTableViewCell";
 
@@ -138,10 +140,16 @@ static NSString *const cellIndentifier = @"BankCardTableViewCell";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     //    typeStr = @"";
-    //    if([segue.identifier isEqualToString:@"PayToCoupon"]){
-    //        QQKCouponViewController *couponCtr = segue.destinationViewController;
-    //        couponCtr.delegate = self;
-    //    }
+        if([segue.identifier isEqualToString:@"goAddBankCard"]){
+            AddBankCardViewController *addBankCtr = segue.destinationViewController;
+            addBankCtr.refreshBlock = ^{
+                [self requestCardList];
+            };
+        }
+        else if([segue.identifier isEqualToString:@"goUntieCard"]){
+            UntieCardViewController *untieCtr = segue.destinationViewController;
+            untieCtr.cardID = @"1";
+        }
 }
 
 //银行列表
@@ -159,7 +167,7 @@ static NSString *const cellIndentifier = @"BankCardTableViewCell";
     [childDic setValue:@"mobile" forKey:@"do"];
     [childDic setValue:@"app.delivery.set.getbanklistapp" forKey:@"r"];
     [childDic setValue:self.appMger.userID forKey:@"openid"];
-    [childDic setValue:self.appMger.riderID forKey:@"sid"];
+//    [childDic setValue:self.appMger.riderID forKey:@"sid"];
     
     [AFHttpRequestManagement PostHttpDataWithUrlStr:@"" Dic:childDic SuccessBlock:^(id responseObject) {
         

@@ -16,7 +16,7 @@
 @synthesize userStatus;
 @synthesize token;
 @synthesize imageURl;
-@synthesize bond_money,balance,photo,photo_front,riderID,health_type,rider_type,addr,mobile,closed;
+@synthesize userName,bond_money,balance,photo,photo_front,riderID,health_type,rider_type,addr,mobile,closed;
 
 
 static AppContextManager *m_manger;

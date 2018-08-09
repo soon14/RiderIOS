@@ -83,7 +83,7 @@ static NSString *const cellIndentifier = @"AddBankCardTableViewCell";
     [self.view endEditing:YES];
     
     [self requestYanzhengCard];
-//    [self.navigationController popViewControllerAnimated:YES];
+//
 }
 
 #pragma mark UIPickerViewDataSource 数据源方法
@@ -330,7 +330,8 @@ static NSString *const cellIndentifier = @"AddBankCardTableViewCell";
     [childDic setValue:@"ewei_shopv2" forKey:@"m"];
     [childDic setValue:@"mobile" forKey:@"do"];
     [childDic setValue:@"app.delivery.set.setbankcardapp" forKey:@"r"];
-    [childDic setValue:@"" forKey:@"name"];
+    [childDic setValue:self.appMger.userName forKey:@"name"];
+     [childDic setValue:self.appMger.userID forKey:@"openid"];
     [childDic setValue:self.cardNumStr forKey:@"cardid"];
     [childDic setValue:self.bankName forKey:@"bankname"];
     [childDic setValue:self.khhStr forKey:@"openingbank"];
@@ -343,7 +344,12 @@ static NSString *const cellIndentifier = @"AddBankCardTableViewCell";
         int errorCode = [[responseDic valueForKey:@"error"] intValue];
         if (errorCode == 0)
         {
+            if(self.refreshBlock)
+            {
+                self.refreshBlock();
+            }
             
+            [self.navigationController popViewControllerAnimated:YES];
         }
         else
         {

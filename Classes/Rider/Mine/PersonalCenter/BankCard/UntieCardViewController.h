@@ -10,4 +10,6 @@
 
 @interface UntieCardViewController : UIViewController
 
+@property(nonatomic,strong)NSString *cardID;
+
 @end

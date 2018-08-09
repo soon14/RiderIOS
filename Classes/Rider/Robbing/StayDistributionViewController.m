@@ -17,6 +17,8 @@ static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
     NSMutableArray *listArr;
 }
 @property(nonatomic,strong) UITableView *m_listTaleView;
+@property (nonatomic, strong) AppContextManager *appMger;
+@property(nonatomic,strong) MBProgressHUD *hubView;
 @end
 
 @implementation StayDistributionViewController
@@ -24,6 +26,10 @@ static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+     self.appMger = [AppContextManager shareManager];
+    
+    
     self.m_listTaleView.separatorStyle = UITableViewCellSelectionStyleNone;
     self.m_listTaleView =  [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStyleGrouped];
     self.m_listTaleView.dataSource = self;
@@ -53,6 +59,14 @@ static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
         .topSpaceToView(self.view, 0)
         .bottomSpaceToView(self.view, 114);
     }
+    
+    self.hubView = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:self.hubView];
+    self.hubView.label.text = @"加载中...";
+    [self.hubView hideAnimated:YES];
+    
+    [self requestStayDistribution];
+    
 }
 
 #pragma mark - UItableView delegate
@@ -128,6 +142,47 @@ static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
     //        QQKCouponViewController *couponCtr = segue.destinationViewController;
     //        couponCtr.delegate = self;
     //    }
+}
+
+- (void)requestStayDistribution
+{
+    [self.hubView showAnimated:YES];
+    
+    //  http://www.pujiante.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=app.delivery.lists.waitapp&type=&order=&openid=
+    
+    NSMutableDictionary *childDic = [[NSMutableDictionary alloc]init];
+    [childDic setValue:@"3" forKey:@"i"];
+    [childDic setValue:@"entry" forKey:@"c"];
+    [childDic setValue:@"ewei_shopv2" forKey:@"m"];
+    [childDic setValue:@"mobile" forKey:@"do"];
+    [childDic setValue:@"app.delivery.lists.waitapp" forKey:@"r"];
+    [childDic setValue:@"1" forKey:@"type"];
+    [childDic setValue:self.appMger.userID forKey:@"openid"];
+    
+    
+    [AFHttpRequestManagement PostHttpDataWithUrlStr:@"" Dic:childDic SuccessBlock:^(id responseObject) {
+        
+        SBJsonParser *json = [[SBJsonParser alloc]init];
+        NSDictionary *responseDic = [json objectWithString:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]];
+        LogInfo(@"responseDic = %@ ",responseDic);
+        
+        int errorCode = [[responseDic valueForKey:@"error"] intValue];
+        if (errorCode == 0)
+        {
+            
+        }
+        else
+        {
+            NSString *errorMessage = [responseDic valueForKey:@"message"];
+            [ShowErrorMgs sendErrorCode:errorMessage withCtr:self];
+        }
+        
+        [self.hubView hideAnimated:YES];
+    } FailureBlock:^(id error) {
+        NSLog(@"error == %@",error);
+        [self.hubView hideAnimated:YES];
+        [ShowErrorMgs sendErrorCode:@"服务器错误，请稍后重试！" withCtr:self];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

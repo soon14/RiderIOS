@@ -7,6 +7,7 @@
 //
 
 #import "ChangeNumberViewController.h"
+#import "LoginViewController.h"
 
 @interface ChangeNumberViewController ()
 {
@@ -37,6 +38,13 @@
     self.hubView.label.text = @"加载中...";
     [self.hubView hideAnimated:YES];
 }
+
+- (IBAction)confirmPress
+{
+    [self requestBindingPhone];
+    
+}
+    
 
 - (IBAction)countDown
 {
@@ -119,7 +127,7 @@
 }
 
 //绑定手机号
-- (void)loginRequest
+- (void)requestBindingPhone
 {
     [self.hubView showAnimated:YES];
     
@@ -144,7 +152,13 @@
         int errorCode = [[responseDic valueForKey:@"error"] intValue];
         if (errorCode == 0)
         {
-           
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:@"NO" forKey:@"Login"];
+            
+            [self.navigationController dismissViewControllerAnimated:NO completion:^{
+                
+            }];
+            
         }
         else
         {

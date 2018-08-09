@@ -58,6 +58,7 @@ typedef enum _RankListType
 @property(nonatomic,strong)NSString *token;
 @property(nonatomic,strong)NSString *imageURl;
 
+@property(nonatomic,strong)NSString *userName;
 @property(nonatomic,strong)NSString *bond_money;
 @property(nonatomic,strong)NSString *balance;
 @property(nonatomic,strong)NSString *photo;

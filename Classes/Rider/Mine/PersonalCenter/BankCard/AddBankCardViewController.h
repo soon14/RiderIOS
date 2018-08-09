@@ -10,4 +10,6 @@
 
 @interface AddBankCardViewController : UIViewController
 
+@property (nonatomic, copy) void(^refreshBlock)(void);
+
 @end
