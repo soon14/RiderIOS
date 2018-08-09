@@ -56,6 +56,7 @@
     [self.occlusionView addGestureRecognizer:tapGesture];
     self.occlusionView.userInteractionEnabled = YES;
     
+    NSLog(@"loginView");
 //    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 //    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
 //    NSDate *datenow = [NSDate date];
