@@ -27,6 +27,7 @@ static NSString *const cellIndentifier = @"BankCardTableViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.appMger = [AppContextManager shareManager];
     cardArr = [[NSMutableArray alloc]initWithObjects:@"zggs",@"shpf",nil];
     
     [self.m_cardTaleView registerNib:[UINib nibWithNibName:@"BankCardTableViewCell" bundle:nil] forCellReuseIdentifier:cellIndentifier];
