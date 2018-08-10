@@ -9,5 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface DistributionMode : NSObject
+@property(nonatomic,strong)NSString *status;
+@property(nonatomic,strong)NSString *shop_name;
+@property(nonatomic,strong)NSString *addrmerch;
 
 @end

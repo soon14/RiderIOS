@@ -18,6 +18,7 @@
 @property(nonatomic,weak)IBOutlet UILabel *moneyLbl;
 @property(nonatomic,weak)IBOutlet UIButton *txBtn;
 @property(nonatomic,weak)IBOutlet UIImageView *lineImaeg;
+@property(nonatomic,weak)IBOutlet UILabel *bankNameLbl;
 
 @end
 
@@ -28,16 +29,28 @@
     // Initialization code
 }
 
-- (void)setData:(NSString *)title withIndex:(NSInteger)indexRow
+- (void)setData:(NSString *)title bankName:(NSString *)name withIndex:(NSInteger)indexRow
 {
     self.titleLbl.text = title;
     self.moneyField.keyboardType = UIKeyboardTypeDecimalPad;
     self.lineImaeg.hidden = NO;
+    self.bankNameLbl.hidden = YES;
+    
     if (indexRow == 0) {
         self.arrowImage.hidden = NO;
         self.moneyLbl.hidden = YES;
         self.txBtn.hidden = YES;
         self.moneyField.hidden = YES;
+        
+        if ([name isEqualToString:@""]) {
+            self.bankNameLbl.hidden = YES;
+        }
+        else
+        {
+            self.bankNameLbl.hidden = NO;
+            self.bankNameLbl.text = name;
+        }
+        
     }
     else if (indexRow == 1)
     {

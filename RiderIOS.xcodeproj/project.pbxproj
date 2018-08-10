@@ -1110,8 +1110,8 @@
 			isa = PBXGroup;
 			children = (
 				0443908C20C624A9002A3102 /* DistributionPointAnnotation.h */,
-				0443908D20C624A9002A3102 /* DistributionMode.h */,
 				0443908E20C624A9002A3102 /* DistributionPointAnnotation.m */,
+				0443908D20C624A9002A3102 /* DistributionMode.h */,
 				0443908F20C624A9002A3102 /* DistributionMode.m */,
 			);
 			path = Mode;

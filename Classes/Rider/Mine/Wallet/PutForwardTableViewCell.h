@@ -10,5 +10,5 @@
 
 @interface PutForwardTableViewCell : UITableViewCell
 
-- (void)setData:(NSString *)title withIndex:(NSInteger)indexRow;
+- (void)setData:(NSString *)title bankName:(NSString *)name withIndex:(NSInteger)indexRow;
 @end

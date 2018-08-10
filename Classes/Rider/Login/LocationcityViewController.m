@@ -13,7 +13,7 @@
 {
     
 }
-
+@property (nonatomic, strong)  NSUserDefaults *defaults;
 @property (nonatomic,strong ) CLLocationManager *locationManager;//定位服务
 @property (nonatomic,copy)    NSString *currentCity;//城市
 
@@ -26,6 +26,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.defaults = [NSUserDefaults standardUserDefaults];
+    
     [self locatemap];
 }
 
@@ -104,6 +107,7 @@
 
 - (IBAction)confirmPress:(id)sender
 {
+    [self.defaults setObject:@"YES" forKey:@"Location"];
     [self performSegueWithIdentifier:@"goTabBar" sender:self];
 }
 

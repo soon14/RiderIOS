@@ -16,13 +16,15 @@
     
    
     NSInteger _count;
-    int codeTime;
-    int codeNum;
+//    int codeTime;
+//    int codeNum;
 }
 @property (nonatomic, weak)IBOutlet UITextField *nameField;
 @property (nonatomic, weak) IBOutlet UITextField *pwdField;
 @property (nonatomic, strong) AppContextManager *appMger;
 @property(nonatomic,strong) MBProgressHUD *hubView;
+@property (nonatomic, strong) NSString *codeTime;
+@property (nonatomic, strong) NSString *codeNum;
 @end
 
 @implementation ChangeNumberViewController
@@ -43,6 +45,10 @@
 {
     [self requestBindingPhone];
     
+//    [self.navigationController dismissViewControllerAnimated:NO completion:^{
+//
+//    }];
+   
 }
     
 
@@ -99,18 +105,19 @@
         
         SBJsonParser *json = [[SBJsonParser alloc]init];
         NSDictionary *responseDic = [json objectWithString:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]];
-        //        LogInfo(@"responseDic = %@ ",responseDic);
+        LogInfo(@"responseDic = %@ ",responseDic);
         int errorCode = [[responseDic valueForKey:@"status"] intValue];
-        if (errorCode == 0)
+        if (errorCode == 1)
         {
+            
 //            [self performSegueWithIdentifier:@"goLocationcity" sender:self];
 //            [self.defaults setObject:@"YES" forKey:@"Login"];
 //            [self.defaults setObject:self.nameField.text forKey:@"PHONENUM"];
 //
             NSDictionary *resultDic = [responseDic valueForKey:@"result"];
 //
-            self->codeTime = [[[resultDic valueForKey:@"info"]valueForKey:@"verifycodesendtime"] intValue];
-            self->codeNum = [[[resultDic valueForKey:@"info"]valueForKey:@"code"] intValue];
+            self.codeTime = [[resultDic valueForKey:@"info"]valueForKey:@"verifycodesendtime"];
+            self.codeNum = [[resultDic valueForKey:@"info"]valueForKey:@"code"];
             
         }
         else
@@ -140,9 +147,10 @@
     [childDic setValue:@"mobile" forKey:@"do"];
     [childDic setValue:self.nameField.text forKey:@"mobile"];
     [childDic setValue:@"app.delivery.set.changephoneapp" forKey:@"r"];
+    [childDic setValue:self.appMger.userID forKey:@"openid"];
     [childDic setValue:self.pwdField.text forKey:@"code1"];
-    [childDic setValue:[NSString stringWithFormat:@"%d",codeNum] forKey:@"code2"];
-    [childDic setValue:[NSString stringWithFormat:@"%d",codeTime] forKey:@"verifycodesendtime"];
+    [childDic setValue:self.codeNum forKey:@"code2"];
+    [childDic setValue:self.codeTime forKey:@"verifycodesendtime"];
     
     [AFHttpRequestManagement PostHttpDataWithUrlStr:@"" Dic:childDic SuccessBlock:^(id responseObject) {
         
@@ -155,9 +163,11 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:@"NO" forKey:@"Login"];
             
-            [self.navigationController dismissViewControllerAnimated:NO completion:^{
-                
-            }];
+            [ShowErrorMgs sendErrorCode:@"绑定银行卡成功" withCtr:self];
+            
+            UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UIViewController *vc = [mainStory instantiateViewControllerWithIdentifier:@"Login"];
+            self.view.window.rootViewController = vc;
             
         }
         else

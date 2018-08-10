@@ -161,7 +161,8 @@
         int errorCode = [[responseDic valueForKey:@"status"] intValue];
         if (errorCode == 0)
         {
-            [self performSegueWithIdentifier:@"goLocationcity" sender:self];
+            
+//            [self performSegueWithIdentifier:@"goLocationcity" sender:self];
             [self.defaults setObject:@"YES" forKey:@"Login"];
             [self.defaults setObject:self.nameField.text forKey:@"PHONENUM"];
 
@@ -189,6 +190,7 @@
      [self.hubView showAnimated:YES];
     
 //   http://www.pujiante.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=app.delivery.login.loginapp&code1=&phone=&code2=&verifycodesendtime=
+    
     NSMutableDictionary *childDic = [[NSMutableDictionary alloc]init];
     [childDic setValue:@"3" forKey:@"i"];
     [childDic setValue:@"entry" forKey:@"c"];
@@ -208,10 +210,17 @@
         int errorCode = [[responseDic valueForKey:@"error"] intValue];
         if (errorCode == 0)
         {
-            //第一次进入App跳定位页面
-            [self performSegueWithIdentifier:@"goLocationcity" sender:self];
-            //第二次进入App直接跳首页
-//              [self performSegueWithIdentifier:@"goHome" sender:self];
+            if ( [[self.defaults objectForKey:@"Location"] isEqualToString:@"YES"]) {
+                //第二次进入App直接跳首页
+                [self performSegueWithIdentifier:@"goHome" sender:self];
+            }
+            else
+            {
+                //第一次进入App跳定位页面
+                [self performSegueWithIdentifier:@"goLocationcity" sender:self];
+            }
+            
+            
             [self.defaults setObject:@"YES" forKey:@"Login"];
             [self.defaults setObject:self.nameField.text forKey:@"PHONENUM"];
             
