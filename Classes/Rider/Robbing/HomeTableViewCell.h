@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DistributionMode.h"
 
 @protocol HomeTableViewCellDelegate <NSObject>
 
@@ -20,5 +21,5 @@
 }
 @property(nonatomic,weak)id<HomeTableViewCellDelegate>delegate;
 
--(void)setData:(NSString *)name indexPath:(NSIndexPath *)pathRow withView:(NSString *)view;
+-(void)setData:(DistributionMode *)mode indexPath:(NSIndexPath *)pathRow withView:(NSString *)view;
 @end

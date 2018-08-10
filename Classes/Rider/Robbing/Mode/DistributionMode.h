@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BasicModel.h"
 
-@interface DistributionMode : NSObject
+@interface DistributionMode : BasicModel
 @property(nonatomic,strong)NSString *status;
 @property(nonatomic,strong)NSString *shop_name;
 @property(nonatomic,strong)NSString *addrmerch;
-
+@property(nonatomic,strong)NSString *userDis;
+@property(nonatomic,strong)NSString *shopDis;
+@property(nonatomic,strong)NSString *price;
 @end

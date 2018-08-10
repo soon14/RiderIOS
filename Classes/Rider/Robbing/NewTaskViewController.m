@@ -15,11 +15,12 @@
 #import "TrainViewController.h"
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import <BaiduMapAPI_Location/BMKLocationComponent.h>
+#import "DistributionMode.h"
 
 static NSString *const listCellIndentifier = @"HomeTableViewCell";
 @interface NewTaskViewController ()<UITableViewDelegate,UITableViewDataSource,HomeTableViewCellDelegate,BMKMapViewDelegate,BMKLocationServiceDelegate>
 {
-     NSMutableArray *listArr;
+    
     BMKMapView* m_mapView;
     BMKLocationService* m_locService;
 }
@@ -27,6 +28,7 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
 @property(nonatomic,strong)GuideView *guideView;
 @property (nonatomic, strong) AppContextManager *appMger;
 @property(nonatomic,strong) MBProgressHUD *hubView;
+@property(nonatomic,strong)NSMutableArray *listArr;
 @end
 
 @implementation NewTaskViewController
@@ -54,7 +56,7 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
     self.m_listTaleView.separatorStyle = UITableViewCellSelectionStyleNone;
 //    self.m_listTaleView.backgroundColor = [UIColor colorWithHexString:@"eff3f8"];
     
-    listArr = [[NSMutableArray alloc]initWithObjects:@"",@"",@"",@"",@"",nil];
+    self.listArr = [[NSMutableArray alloc]initWithCapacity:0];
     
     self.guideView = [[GuideView alloc]initWithFrame:CGRectMake(0, 0, Screen_width, Screen_height-50)];
     
@@ -143,7 +145,7 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return [listArr count];
+    return [self.listArr count];
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -175,7 +177,7 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
                                         reuseIdentifier:listCellIndentifier];
     }
     cell.delegate = self;
-    [cell setData:@"" indexPath:indexPath withView:@"Grab"];
+    [cell setData:self.listArr[indexPath.row] indexPath:indexPath withView:@"Grab"];
     cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -225,7 +227,17 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
         int errorCode = [[responseDic valueForKey:@"error"] intValue];
         if (errorCode == 0)
         {
+            NSArray *listArray = [responseDic valueForKey:@"list"];
+            NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
+            for (int i = 0; i<[listArray count]; i++)
+            {
+                DistributionMode *listModel = [[DistributionMode alloc] init];
+                [listModel parseFromDictionary:[listArray objectAtIndex:i]];
+                [requestArray addObject:listModel];
+            }
             
+            [self.listArr addObjectsFromArray:requestArray];
+            [self.m_listTaleView reloadData];
         }
         else
         {

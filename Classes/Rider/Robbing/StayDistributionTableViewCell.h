@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DistributionMode.h"
 
 @interface StayDistributionTableViewCell : UITableViewCell
 
@@ -14,5 +15,5 @@
 @property (nonatomic, copy) void(^didContactButton)(NSInteger idx);
 @property (nonatomic, copy) void(^didStatusButton)(NSInteger idx);
 
-- (void)setType:(NSString *)type indexPath:(NSIndexPath *)pathRow  withData:(NSString *)dataStr;
+- (void)setType:(NSString *)type indexPath:(NSIndexPath *)pathRow  withData:(DistributionMode *)mode;
 @end

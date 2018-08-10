@@ -170,11 +170,13 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="mAz-hq-aI1"/>
             <connections>
-                <outlet property="businessAddr" destination="Kns-DR-XTt" id="UdQ-o9-HTm"/>
-                <outlet property="businessDis" destination="a8A-Cb-Jk5" id="gC4-7v-mrv"/>
+                <outlet property="businessAddr" destination="a8A-Cb-Jk5" id="99r-F8-gai"/>
+                <outlet property="businessDis" destination="Kns-DR-XTt" id="HUZ-Gu-jmG"/>
                 <outlet property="dateLbl" destination="Qz5-ET-zGQ" id="sqR-uo-DJ1"/>
                 <outlet property="jdBtn" destination="NPD-sA-i36" id="7tQ-p8-VOA"/>
-                <outlet property="timeLbl" destination="9Y4-7i-KWK" id="VfB-6s-uwV"/>
+                <outlet property="priceLbl" destination="CQL-WK-Ct5" id="6vn-6q-EfU"/>
+                <outlet property="receiptAddr" destination="SSM-Iq-aPI" id="KS9-vG-7EJ"/>
+                <outlet property="receiptDis" destination="mTR-gP-JJ3" id="lX1-OE-myC"/>
             </connections>
             <point key="canvasLocation" x="-285.5" y="24"/>
         </tableViewCell>

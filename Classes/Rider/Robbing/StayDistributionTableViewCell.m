@@ -11,6 +11,9 @@
 @interface StayDistributionTableViewCell ()
 @property(nonatomic,weak)IBOutlet UIButton *contactBtn;
 @property(nonatomic,weak)IBOutlet UIButton *statusBtn;
+@property(nonatomic,weak)IBOutlet UILabel *timeLbl;
+@property(nonatomic,weak)IBOutlet UILabel *businessAddr;
+@property(nonatomic,weak)IBOutlet UILabel *receiptAddr;
 @property(nonatomic,assign)NSInteger index;
 @end
 
@@ -27,8 +30,11 @@
     // Configure the view for the selected state
 }
 
-- (void)setType:(NSString *)type indexPath:(NSIndexPath *)pathRow  withData:(NSString *)dataStr
+- (void)setType:(NSString *)type indexPath:(NSIndexPath *)pathRow  withData:(DistributionMode *)mode
 {
+    self.businessAddr.text = mode.shop_name;
+    self.receiptAddr.text = mode.addrmerch;
+
     self.index = pathRow.row+101;
     if ([type isEqualToString:@"Stay"]) {
         [self.contactBtn setTitle:@"联系商家" forState:UIControlStateNormal];
