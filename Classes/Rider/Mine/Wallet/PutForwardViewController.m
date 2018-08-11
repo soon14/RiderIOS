@@ -50,6 +50,8 @@ static NSString *const cellIndentifier = @"PutForwardTableViewCell";
     [self requestBankList];
 }
 
+
+
 - (IBAction)cancel:(id)sender
 {
     self.bankView.hidden = YES;
@@ -65,6 +67,8 @@ static NSString *const cellIndentifier = @"PutForwardTableViewCell";
 
 - (IBAction)confirmPress:(id)sender
 {
+    [self.view endEditing:YES];
+     self.bankView.hidden = YES;
     [self performSegueWithIdentifier:@"goPutForwardDetail" sender:nil];
 }
 
@@ -163,6 +167,25 @@ static NSString *const cellIndentifier = @"PutForwardTableViewCell";
         cell = [[PutForwardTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                           reuseIdentifier:cellIndentifier];
     }
+    
+    __weak typeof(self) weakSelf = self;
+    
+    cell.txBlock = ^{
+        weakSelf.bankView.hidden = YES;
+        [weakSelf.view endEditing:YES];
+    };
+    
+    cell.beginEditingBlock = ^{
+        weakSelf.bankView.hidden = YES;
+    };
+    
+    cell.returnBlock = ^(NSString *number) {
+        NSLog(@"return == %@",number);
+    };
+    
+    cell.endEditingBlock = ^(NSString *number,NSInteger tag) {
+       NSLog(@"endEditing == %@",number);
+    };
 
     [cell setData:titleArr[indexPath.row] bankName:bankName withIndex:indexPath.row];
     cell.backgroundColor = [UIColor whiteColor];

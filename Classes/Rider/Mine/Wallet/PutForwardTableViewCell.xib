@@ -53,6 +53,9 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6M4-T3-C67">
                         <rect key="frame" x="257" y="16" width="62" height="30"/>
                         <state key="normal" title="全部提现"/>
+                        <connections>
+                            <action selector="allBalance:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="e79-l6-i0E"/>
+                        </connections>
                     </button>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="满100免手续费" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ep3-UQ-2DP">
                         <rect key="frame" x="213" y="18" width="106" height="26"/>

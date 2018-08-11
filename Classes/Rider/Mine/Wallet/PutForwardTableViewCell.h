@@ -10,5 +10,10 @@
 
 @interface PutForwardTableViewCell : UITableViewCell
 
+@property (nonatomic, copy) void(^txBlock)(void);
+@property (nonatomic, copy) void(^beginEditingBlock)(void);
+@property (nonatomic, copy) void(^returnBlock)(NSString *number);
+@property (nonatomic, copy) void(^endEditingBlock)(NSString *number,NSInteger tag);
+
 - (void)setData:(NSString *)title bankName:(NSString *)name withIndex:(NSInteger)indexRow;
 @end

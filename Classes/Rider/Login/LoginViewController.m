@@ -56,12 +56,16 @@
     [self.occlusionView addGestureRecognizer:tapGesture];
     self.occlusionView.userInteractionEnabled = YES;
     
-    NSLog(@"loginView");
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-//    NSDate *datenow = [NSDate date];
-//    NSString *nowtimeStr = [formatter stringFromDate:datenow];
-//    NSLog(@"nowtimeStr == ",nowtimeStr);
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
+    tap1.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tap1];
+}
+
+-(void)viewTapped:(UITapGestureRecognizer*)tap1
+{
+    
+    [self.view endEditing:YES];
+    
 }
 
 - (IBAction)showPWDLoginView

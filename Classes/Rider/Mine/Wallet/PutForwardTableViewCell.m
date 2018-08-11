@@ -8,7 +8,7 @@
 
 #import "PutForwardTableViewCell.h"
 
-@interface PutForwardTableViewCell()
+@interface PutForwardTableViewCell()<UITextFieldDelegate>
 {
     
 }
@@ -35,7 +35,7 @@
     self.moneyField.keyboardType = UIKeyboardTypeDecimalPad;
     self.lineImaeg.hidden = NO;
     self.bankNameLbl.hidden = YES;
-    
+    self.moneyField.delegate = self;
     if (indexRow == 0) {
         self.arrowImage.hidden = NO;
         self.moneyLbl.hidden = YES;
@@ -67,6 +67,40 @@
          self.txBtn.hidden = NO;
         self.lineImaeg.hidden = YES;
     }
+}
+
+- (IBAction)allBalance:(id)sender
+{
+    if (self.txBlock) {
+        self.txBlock();
+    }
+}
+
+
+- ( BOOL )textFieldShouldBeginEditing:( UITextField *)textField
+{
+    if (self.beginEditingBlock) {
+        self.beginEditingBlock();
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField;
+{
+    if (self.returnBlock) {
+        self.returnBlock(textField.text);
+    }
+    return YES;
+}
+
+- ( void )textFieldDidEndEditing:( UITextField *)textField
+{
+   
+    
+    if (self.endEditingBlock) {
+        self.endEditingBlock(textField.text,textField.tag-100);
+    }
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
