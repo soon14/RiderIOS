@@ -1914,7 +1914,7 @@
         <!--登录-->
         <scene sceneID="XLL-F0-eUi">
             <objects>
-                <viewController id="d7L-SE-rwT" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Login" id="d7L-SE-rwT" customClass="LoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bC9-Xs-tcx"/>
                         <viewControllerLayoutGuide type="bottom" id="d2n-Vx-rVu"/>
@@ -2881,6 +2881,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="Ehc-Kq-fhv"/>
         <segue reference="jjy-P3-VHW"/>
-        <segue reference="Vrj-SD-idc"/>
+        <segue reference="pqW-6y-3fr"/>
     </inferredMetricsTieBreakers>
 </document>

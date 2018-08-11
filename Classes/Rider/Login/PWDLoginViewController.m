@@ -65,10 +65,16 @@
         int errorCode = [[responseDic valueForKey:@"error"] intValue];
         if (errorCode == 0)
         {
-            //直接跳首页
-            [self performSegueWithIdentifier:@"goTabBar" sender:self];
-            //第一次跳定位页面
-//            [self performSegueWithIdentifier:@"goLcationCity" sender:self];
+            if ( [[self.defaults objectForKey:@"Location"] isEqualToString:@"YES"]) {
+                //第二次进入App直接跳首页
+                 [self performSegueWithIdentifier:@"goTabBar" sender:self];
+            }
+            else
+            {
+                //第一次进入App跳定位页面
+               [self performSegueWithIdentifier:@"goLcationCity" sender:self];
+            }
+//
             [self.defaults setObject:@"YES" forKey:@"Login"];
             [self.defaults setObject:self.nameField.text forKey:@"PHONENUM"];
             

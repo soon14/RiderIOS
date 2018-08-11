@@ -9,16 +9,18 @@
 #import "StayDistributionViewController.h"
 #import "StayDistributionTableViewCell.h"
 #import "GrabViewController.h"
+#import "DistributionMode.h"
 
 static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
 
 @interface StayDistributionViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-    NSMutableArray *listArr;
+    
 }
 @property(nonatomic,strong) UITableView *m_listTaleView;
 @property (nonatomic, strong) AppContextManager *appMger;
 @property(nonatomic,strong) MBProgressHUD *hubView;
+@property(nonatomic,strong) NSMutableArray *listArr;
 @end
 
 @implementation StayDistributionViewController
@@ -42,7 +44,7 @@ static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
     self.m_listTaleView.separatorStyle = UITableViewCellSelectionStyleNone;
     //    self.m_listTaleView.backgroundColor = [UIColor colorWithHexString:@"eff3f8"];
     
-    listArr = [[NSMutableArray alloc]initWithObjects:@"",@"",@"",@"",@"",nil];
+    self.listArr = [[NSMutableArray alloc]initWithCapacity:0];
     
     if (KIsiPhoneX) {
         self.m_listTaleView.sd_layout
@@ -78,7 +80,7 @@ static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return [listArr count];
+    return [self.listArr count];
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -109,7 +111,7 @@ static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
         cell = [[StayDistributionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                         reuseIdentifier:listCellIndentifier];
     }
-    [cell setType:@"Stay" indexPath:indexPath withData:@""];
+    [cell setType:@"Stay" indexPath:indexPath withData:self.listArr[indexPath.row]];
 
     cell.didContactButton = ^(NSInteger idx) {
         NSLog(@"Contactidx == %lu",idx);
@@ -169,7 +171,17 @@ static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
         int errorCode = [[responseDic valueForKey:@"error"] intValue];
         if (errorCode == 0)
         {
+            NSArray *listArray = [responseDic valueForKey:@"list"];
+            NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
+            for (int i = 0; i<[listArray count]; i++)
+            {
+                DistributionMode *listModel = [[DistributionMode alloc] init];
+                [listModel parseFromDictionary:[listArray objectAtIndex:i]];
+                [requestArray addObject:listModel];
+            }
             
+            [self.listArr addObjectsFromArray:requestArray];
+            [self.m_listTaleView reloadData];
         }
         else
         {

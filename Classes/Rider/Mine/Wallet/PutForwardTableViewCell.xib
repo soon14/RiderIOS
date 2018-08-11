@@ -38,6 +38,12 @@
                             <constraint firstAttribute="height" constant="1" id="NqP-ed-hbn"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVT-QM-oEe">
+                        <rect key="frame" x="143" y="21" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="125.72元" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ujR-wf-KK7">
                         <rect key="frame" x="92" y="21.5" width="64.5" height="19.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -47,6 +53,9 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6M4-T3-C67">
                         <rect key="frame" x="257" y="16" width="62" height="30"/>
                         <state key="normal" title="全部提现"/>
+                        <connections>
+                            <action selector="allBalance:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="e79-l6-i0E"/>
+                        </connections>
                     </button>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="满100免手续费" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ep3-UQ-2DP">
                         <rect key="frame" x="213" y="18" width="106" height="26"/>
@@ -68,14 +77,17 @@
                     <constraint firstAttribute="trailing" secondItem="ep3-UQ-2DP" secondAttribute="trailing" constant="10" id="JPl-Gg-thX"/>
                     <constraint firstAttribute="bottom" secondItem="WKy-hz-d5h" secondAttribute="bottom" constant="1" id="MoZ-wa-nSN"/>
                     <constraint firstItem="OP6-Qf-4ZP" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="RoV-gg-mdZ"/>
+                    <constraint firstItem="jVT-QM-oEe" firstAttribute="centerY" secondItem="2ML-iV-4xh" secondAttribute="centerY" id="UvF-Xr-mYG"/>
                     <constraint firstItem="2ML-iV-4xh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="X0i-ab-y1V"/>
                     <constraint firstItem="6M4-T3-C67" firstAttribute="centerY" secondItem="ujR-wf-KK7" secondAttribute="centerY" id="iW1-zj-8Tf"/>
                     <constraint firstItem="WKy-hz-d5h" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="qzY-GK-rdS"/>
                     <constraint firstItem="2ML-iV-4xh" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rO3-9Y-Shl"/>
+                    <constraint firstItem="jVT-QM-oEe" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="v71-Zc-pBt"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="arrowImage" destination="OP6-Qf-4ZP" id="Hcu-lu-4Gq"/>
+                <outlet property="bankNameLbl" destination="jVT-QM-oEe" id="yus-zD-cjE"/>
                 <outlet property="lineImaeg" destination="WKy-hz-d5h" id="3Xb-m4-03E"/>
                 <outlet property="moneyField" destination="ep3-UQ-2DP" id="e7j-w0-iyy"/>
                 <outlet property="moneyLbl" destination="ujR-wf-KK7" id="51X-Fi-1QM"/>

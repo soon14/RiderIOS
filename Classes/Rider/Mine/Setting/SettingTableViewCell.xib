@@ -39,9 +39,17 @@
                             <constraint firstAttribute="height" constant="1" id="PgG-Sa-1wO"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z3U-RR-PoO">
+                        <rect key="frame" x="238" y="11" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="z3U-RR-PoO" firstAttribute="centerY" secondItem="fgk-jG-2a5" secondAttribute="centerY" id="42q-G7-wQe"/>
                     <constraint firstItem="RJT-oz-1Gp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Jag-qB-5M2"/>
+                    <constraint firstItem="xol-ST-bxe" firstAttribute="leading" secondItem="z3U-RR-PoO" secondAttribute="trailing" constant="20" id="NJF-3T-P4v"/>
                     <constraint firstItem="fgk-jG-2a5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Pz0-Vk-Zff"/>
                     <constraint firstItem="xol-ST-bxe" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="UGE-sk-UIa"/>
                     <constraint firstAttribute="trailing" secondItem="RJT-oz-1Gp" secondAttribute="trailing" id="hfv-1l-fWO"/>
@@ -52,6 +60,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
+                <outlet property="cacheLbl" destination="z3U-RR-PoO" id="ozF-qu-wRU"/>
                 <outlet property="nameLbl" destination="fgk-jG-2a5" id="gpd-56-xxN"/>
             </connections>
         </tableViewCell>

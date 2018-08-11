@@ -13,16 +13,22 @@
 #import "AuthenticationIDViewController.h"
 #import "MyNavgationViewController.h"
 #import "TrainViewController.h"
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>
+#import "DistributionMode.h"
 
 static NSString *const listCellIndentifier = @"HomeTableViewCell";
-@interface NewTaskViewController ()<UITableViewDelegate,UITableViewDataSource,HomeTableViewCellDelegate>
+@interface NewTaskViewController ()<UITableViewDelegate,UITableViewDataSource,HomeTableViewCellDelegate,BMKMapViewDelegate,BMKLocationServiceDelegate>
 {
-     NSMutableArray *listArr;
+    
+    BMKMapView* m_mapView;
+    BMKLocationService* m_locService;
 }
 @property(nonatomic,strong) UITableView *m_listTaleView;
 @property(nonatomic,strong)GuideView *guideView;
 @property (nonatomic, strong) AppContextManager *appMger;
 @property(nonatomic,strong) MBProgressHUD *hubView;
+@property(nonatomic,strong)NSMutableArray *listArr;
 @end
 
 @implementation NewTaskViewController
@@ -32,6 +38,11 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
     // Do any additional setup after loading the view.
    
     self.appMger = [AppContextManager shareManager];
+    
+     m_mapView = [[BMKMapView alloc]init];
+    //定位
+    m_locService = [[BMKLocationService alloc]init];
+    [m_locService startUserLocationService];
     
     self.m_listTaleView.separatorStyle = UITableViewCellSelectionStyleNone;
     self.m_listTaleView =  [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStyleGrouped];
@@ -45,7 +56,7 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
     self.m_listTaleView.separatorStyle = UITableViewCellSelectionStyleNone;
 //    self.m_listTaleView.backgroundColor = [UIColor colorWithHexString:@"eff3f8"];
     
-    listArr = [[NSMutableArray alloc]initWithObjects:@"",@"",@"",@"",@"",nil];
+    self.listArr = [[NSMutableArray alloc]initWithCapacity:0];
     
     self.guideView = [[GuideView alloc]initWithFrame:CGRectMake(0, 0, Screen_width, Screen_height-50)];
     
@@ -134,7 +145,7 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return [listArr count];
+    return [self.listArr count];
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -166,7 +177,7 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
                                         reuseIdentifier:listCellIndentifier];
     }
     cell.delegate = self;
-    [cell setData:@"" indexPath:indexPath withView:@"Grab"];
+    [cell setData:self.listArr[indexPath.row] indexPath:indexPath withView:@"Grab"];
     cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -216,7 +227,17 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
         int errorCode = [[responseDic valueForKey:@"error"] intValue];
         if (errorCode == 0)
         {
+            NSArray *listArray = [responseDic valueForKey:@"list"];
+            NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
+            for (int i = 0; i<[listArray count]; i++)
+            {
+                DistributionMode *listModel = [[DistributionMode alloc] init];
+                [listModel parseFromDictionary:[listArray objectAtIndex:i]];
+                [requestArray addObject:listModel];
+            }
             
+            [self.listArr addObjectsFromArray:requestArray];
+            [self.m_listTaleView reloadData];
         }
         else
         {
@@ -241,6 +262,56 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
         self.prohibitSlide(NO);
     }
 }
+
+#pragma mark 百度地图委托方法
+/**
+ *用户位置更新后，会调用此函数
+ *@param userLocation 新的用户位置
+ */
+- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
+{
+    //        NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    //    m_appMger.locX = [NSString  CLLocationCoordinate2DMake(userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    self.appMger.locX = [NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude];
+    self.appMger.locY = [NSString stringWithFormat:@"%f",userLocation.location.coordinate.latitude];
+    [m_mapView updateLocationData:userLocation];
+    
+}
+
+/**
+ *在地图View停止定位后，会调用此函数
+ *@param mapView 地图View
+ */
+- (void)didStopLocatingUser
+{
+    NSLog(@"stop locate");
+}
+
+/**
+ *定位失败后，会调用此函数
+ *@param mapView 地图View
+ *@param error 错误号，参考CLError.h中定义的错误号
+ */
+- (void)didFailToLocateUserWithError:(NSError *)error
+{
+    NSLog(@"location error");
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    m_mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
+    m_locService.delegate = self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    m_mapView.delegate = nil;
+    m_locService.delegate = nil;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

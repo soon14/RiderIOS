@@ -123,8 +123,11 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="businessAddr" destination="Chk-bL-jnx" id="ZSw-hH-06p"/>
                 <outlet property="contactBtn" destination="SUN-1k-Gjx" id="c7u-h5-HoE"/>
+                <outlet property="receiptAddr" destination="2fr-kY-7DV" id="cte-f2-ZIc"/>
                 <outlet property="statusBtn" destination="h61-2q-9KL" id="C9H-43-iB2"/>
+                <outlet property="timeLbl" destination="37e-8v-cgd" id="b4M-Ii-3Da"/>
             </connections>
             <point key="canvasLocation" x="26" y="48"/>
         </tableViewCell>

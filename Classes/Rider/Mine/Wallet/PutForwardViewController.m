@@ -8,12 +8,14 @@
 
 #import "PutForwardViewController.h"
 #import "PutForwardTableViewCell.h"
+#import "BankCardModel.h"
 
 static NSString *const cellIndentifier = @"PutForwardTableViewCell";
 
 @interface PutForwardViewController ()<UIPickerViewDelegate,UIPickerViewDataSource>
 {
      NSMutableArray *titleArr;
+     NSString *bankName;
 }
 @property(nonatomic,weak)IBOutlet UITableView *forwardListView;
 @property(nonatomic,weak)IBOutlet UIButton *confirmBtn;
@@ -21,6 +23,7 @@ static NSString *const cellIndentifier = @"PutForwardTableViewCell";
 @property(nonatomic,strong) MBProgressHUD *hubView;
 @property(nonatomic,weak)IBOutlet UIView *bankView;
 @property(nonatomic,weak)IBOutlet UIPickerView *m_bankPicker;
+@property(nonatomic,strong)NSMutableArray *bankArr;
 @end
 
 @implementation PutForwardViewController
@@ -30,9 +33,9 @@ static NSString *const cellIndentifier = @"PutForwardTableViewCell";
     // Do any additional setup after loading the view.
     
     self.appMger = [AppContextManager shareManager];
-    
+    bankName = @"";
     titleArr = [[NSMutableArray alloc]initWithObjects:@"选择银行卡",@"提现金额",@"本次可提现金额：",nil];
-    
+    self.bankArr = [[NSMutableArray alloc]initWithCapacity:0];
     self.forwardListView.scrollEnabled = NO;
     [self.forwardListView registerNib:[UINib nibWithNibName:@"PutForwardTableViewCell" bundle:nil] forCellReuseIdentifier:cellIndentifier];
      self.forwardListView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -47,6 +50,8 @@ static NSString *const cellIndentifier = @"PutForwardTableViewCell";
     [self requestBankList];
 }
 
+
+
 - (IBAction)cancel:(id)sender
 {
     self.bankView.hidden = YES;
@@ -55,13 +60,15 @@ static NSString *const cellIndentifier = @"PutForwardTableViewCell";
 - (IBAction)confirm:(id)sender
 {
     self.bankView.hidden = YES;
-    
+    [self.view endEditing:YES];
     [self.forwardListView reloadData];
 }
 
 
 - (IBAction)confirmPress:(id)sender
 {
+    [self.view endEditing:YES];
+     self.bankView.hidden = YES;
     [self performSegueWithIdentifier:@"goPutForwardDetail" sender:nil];
 }
 
@@ -77,7 +84,7 @@ static NSString *const cellIndentifier = @"PutForwardTableViewCell";
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     
-    return 5;
+    return self.bankArr.count;
     
 }
 
@@ -86,8 +93,8 @@ static NSString *const cellIndentifier = @"PutForwardTableViewCell";
 //// 返回每行的标题
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    
-    return [NSString stringWithFormat:@"第%d行",row];
+    BankCardModel *mode = self.bankArr[row];
+    return mode.bankname;
 }
 
 // 选中行显示在label上
@@ -102,7 +109,8 @@ static NSString *const cellIndentifier = @"PutForwardTableViewCell";
     //        self.drinkLabel.text = items[row];
     //    }
     
-    //    bankName = self.bankArr[row];
+        BankCardModel *mode = self.bankArr[row];
+        bankName = mode.bankname;
 }
 
 
@@ -159,8 +167,27 @@ static NSString *const cellIndentifier = @"PutForwardTableViewCell";
         cell = [[PutForwardTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                           reuseIdentifier:cellIndentifier];
     }
+    
+    __weak typeof(self) weakSelf = self;
+    
+    cell.txBlock = ^{
+        weakSelf.bankView.hidden = YES;
+        [weakSelf.view endEditing:YES];
+    };
+    
+    cell.beginEditingBlock = ^{
+        weakSelf.bankView.hidden = YES;
+    };
+    
+    cell.returnBlock = ^(NSString *number) {
+        NSLog(@"return == %@",number);
+    };
+    
+    cell.endEditingBlock = ^(NSString *number,NSInteger tag) {
+       NSLog(@"endEditing == %@",number);
+    };
 
-    [cell setData:titleArr[indexPath.row] withIndex:indexPath.row];
+    [cell setData:titleArr[indexPath.row] bankName:bankName withIndex:indexPath.row];
     cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -170,14 +197,21 @@ static NSString *const cellIndentifier = @"PutForwardTableViewCell";
 //
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0)
+    if (indexPath.row == 0)
     {
-        
         self.bankView.hidden = NO;
         [self.view endEditing:YES];
+    
+       BankCardModel *mode = self.bankArr[indexPath.row];
+        bankName = mode.bankname;
 //        [self performSegueWithIdentifier:@"goCash" sender:nil];
     }
+    else
+    {
+        self.bankView.hidden = YES;
+    }
 
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -213,8 +247,17 @@ static NSString *const cellIndentifier = @"PutForwardTableViewCell";
         int errorCode = [[responseDic valueForKey:@"error"] intValue];
         if (errorCode == 0)
         {
+            NSArray *listArray = [responseDic valueForKey:@"banklist"];
+            NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
+            for (int i = 0; i<[listArray count]; i++)
+            {
+                BankCardModel *listModel = [[BankCardModel alloc] init];
+                [listModel parseFromDictionary:[listArray objectAtIndex:i]];
+                [requestArray addObject:listModel];
+            }
             
-        
+            [self.bankArr addObjectsFromArray:requestArray];
+            [self.m_bankPicker reloadAllComponents];
         }
         else
         {

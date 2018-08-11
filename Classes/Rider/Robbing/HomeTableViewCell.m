@@ -12,7 +12,7 @@
 @interface HomeTableViewCell()
 {
     IBOutlet UILabel *dateLbl;
-    IBOutlet UILabel *timeLbl;
+    IBOutlet UILabel *priceLbl;
     IBOutlet UILabel *businessAddr;
     IBOutlet UILabel *businessDis;
     IBOutlet UILabel *receiptAddr;
@@ -30,8 +30,14 @@
     // Initialization code
 }
 
--(void)setData:(NSString *)name indexPath:(NSIndexPath *)pathRow withView:(NSString *)view
+-(void)setData:(DistributionMode *)mode indexPath:(NSIndexPath *)pathRow withView:(NSString *)view
 {
+    businessAddr.text = mode.shop_name;
+    businessDis.text = [NSString stringWithFormat:@"%@km",mode.shopDis];
+    receiptAddr.text = mode.addrmerch;
+    receiptDis.text = [NSString stringWithFormat:@"%@km",mode.userDis];
+    priceLbl.text = mode.price;
+    
     if ([view isEqualToString:@"Map"]) {
         jdBtn.hidden = YES;
     }

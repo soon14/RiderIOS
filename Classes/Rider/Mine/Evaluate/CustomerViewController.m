@@ -51,7 +51,7 @@ static NSString *const customerCellIndentifier = @"CustomerTableViewCell";
     
     self.hubView = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:self.hubView];
-    self.hubView.label.text = @"加载中...";
+    self.hubView.label.text = @"正在清除缓存...";
     [self.hubView hideAnimated:YES];
     
      self.appMger = [AppContextManager shareManager];

@@ -10,5 +10,5 @@
 
 @interface SettingTableViewCell : UITableViewCell
 
-- (void)setData:(NSString *)name;
+- (void)setData:(NSString *)name indexRow:(NSInteger)row withCache:(unsigned long long)size;
 @end
