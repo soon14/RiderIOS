@@ -8,14 +8,18 @@
 
 #import "SettingViewController.h"
 #import "SettingTableViewCell.h"
+#import "UIImageView+WebCache.h"
 
 static NSString *const cellIndentifier = @"SettingTableViewCell";
 
 @interface SettingViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
      NSMutableArray *setArr;
+    
 }
 @property(nonatomic,weak)IBOutlet UITableView *m_setTaleView;
+@property(nonatomic,strong) MBProgressHUD *hubView;
+@property(nonatomic,assign) unsigned long long size;
 @end
 
 @implementation SettingViewController
@@ -31,6 +35,12 @@ static NSString *const cellIndentifier = @"SettingTableViewCell";
     [self.m_setTaleView registerNib:[UINib nibWithNibName:@"SettingTableViewCell" bundle:nil] forCellReuseIdentifier:cellIndentifier];
     self.m_setTaleView.separatorStyle = UITableViewCellSelectionStyleNone;
     
+    self.hubView = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:self.hubView];
+    self.hubView.label.text = @"加载中...";
+    [self.hubView hideAnimated:YES];
+    
+    self.size = [SDImageCache sharedImageCache].getSize;
 }
 
 #pragma mark - UItableView delegate
@@ -81,7 +91,7 @@ static NSString *const cellIndentifier = @"SettingTableViewCell";
                                         reuseIdentifier:cellIndentifier];
     }
     
-    [cell setData:setArr[indexPath.row]];
+    [cell setData:setArr[indexPath.row] indexRow:indexPath.row withCache:self.size];
     cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 //    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -91,10 +101,38 @@ static NSString *const cellIndentifier = @"SettingTableViewCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //        [self performSegueWithIdentifier:@"goAchievements" sender:nil];
-    if (indexPath.row == 3) {
+    if (indexPath.row == 0)
+    {
+        [self clearCacheClick];
+    }
+    else if (indexPath.row == 3) {
        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:@"NO" forKey:@"Login"];
+        
+        UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *vc = [mainStory instantiateViewControllerWithIdentifier:@"Login"];
+        self.view.window.rootViewController = vc;
+        
     }
+}
+
+- (void)clearCacheClick
+{
+    [self.hubView showAnimated:YES];
+    
+    [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            
+             self.size = [SDImageCache sharedImageCache].getSize;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+            
+                [self.hubView hideAnimated:YES];
+                [self.m_setTaleView reloadData];
+                
+            });
+        });
+    }];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
