@@ -1898,7 +1898,7 @@
         <!--My Navgation View Controller-->
         <scene sceneID="jQ2-8x-4kO">
             <objects>
-                <navigationController id="fBp-SQ-P9Q" customClass="MyNavgationViewController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LoginNav" id="fBp-SQ-P9Q" customClass="MyNavgationViewController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cj8-yd-8Iy">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2275,7 +2275,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wbt-hc-jZk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2996" y="-1222.9385307346329"/>
+            <point key="canvasLocation" x="-2767" y="-1125"/>
         </scene>
         <!--城市定位-->
         <scene sceneID="lcb-fW-tRw">
@@ -2363,7 +2363,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Khj-s0-bai" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2727" y="-493"/>
+            <point key="canvasLocation" x="-2794" y="-393"/>
         </scene>
         <!--Navigation Address View Controller-->
         <scene sceneID="ifC-aY-OxZ">
@@ -2879,8 +2879,8 @@
         <image name="zhifu" width="90" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ehc-Kq-fhv"/>
+        <segue reference="nse-T1-ZWN"/>
         <segue reference="jjy-P3-VHW"/>
-        <segue reference="pqW-6y-3fr"/>
+        <segue reference="Vrj-SD-idc"/>
     </inferredMetricsTieBreakers>
 </document>

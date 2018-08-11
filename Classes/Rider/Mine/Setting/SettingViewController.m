@@ -9,6 +9,7 @@
 #import "SettingViewController.h"
 #import "SettingTableViewCell.h"
 #import "UIImageView+WebCache.h"
+#import "MyNavgationViewController.h"
 
 static NSString *const cellIndentifier = @"SettingTableViewCell";
 
@@ -110,7 +111,7 @@ static NSString *const cellIndentifier = @"SettingTableViewCell";
         [defaults setObject:@"NO" forKey:@"Login"];
         
         UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *vc = [mainStory instantiateViewControllerWithIdentifier:@"Login"];
+        MyNavgationViewController *vc = [mainStory instantiateViewControllerWithIdentifier:@"LoginNav"];
         self.view.window.rootViewController = vc;
         
     }

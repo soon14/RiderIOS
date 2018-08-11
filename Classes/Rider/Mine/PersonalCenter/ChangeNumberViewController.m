@@ -8,6 +8,7 @@
 
 #import "ChangeNumberViewController.h"
 #import "LoginViewController.h"
+#import "MyNavgationViewController.h"
 
 @interface ChangeNumberViewController ()
 {
@@ -166,7 +167,7 @@
             [ShowErrorMgs sendErrorCode:@"绑定银行卡成功" withCtr:self];
             
             UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            UIViewController *vc = [mainStory instantiateViewControllerWithIdentifier:@"Login"];
+            MyNavgationViewController *vc = [mainStory instantiateViewControllerWithIdentifier:@"LoginNav"];
             self.view.window.rootViewController = vc;
             
         }
