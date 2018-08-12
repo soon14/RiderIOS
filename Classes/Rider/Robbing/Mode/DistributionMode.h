@@ -16,4 +16,5 @@
 @property(nonatomic,strong)NSString *userDis;
 @property(nonatomic,strong)NSString *shopDis;
 @property(nonatomic,strong)NSString *price;
+@property(nonatomic,strong)NSString *orderID;
 @end

@@ -23,6 +23,7 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
     
     BMKMapView* m_mapView;
     BMKLocationService* m_locService;
+    int refreshCount;
 }
 @property(nonatomic,strong) UITableView *m_listTaleView;
 @property(nonatomic,strong)GuideView *guideView;
@@ -133,7 +134,9 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
     self.hubView.label.text = @"加载中...";
     [self.hubView hideAnimated:YES];
     
-    [self requestNewTask];
+    refreshCount = 0;
+    
+//    [self requestNewTask];
 }
 
 #pragma mark - UItableView delegate
@@ -185,11 +188,13 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    DistributionMode *mode = self.listArr[indexPath.row];
     
     UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     //将第二个控制器实例化，"SecondViewController"为我们设置的控制器的ID
     GrabViewController *detailVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"GrabViewController"];
     detailVC.grabType = @"new";
+    detailVC.orderID = mode.orderID;
     detailVC.hidesBottomBarWhenPushed = YES;
 //    detailVC.entranceStr = @"派单中";
     [self.navigationController pushViewController:detailVC animated:YES];
@@ -205,6 +210,7 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
 
 - (void)requestNewTask
 {
+    refreshCount = 1;
     [self.hubView showAnimated:YES];
     
     //  http://www.pujiante.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=app.delivery.lists.scrapedapp&type=&order=
@@ -215,6 +221,9 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
     [childDic setValue:@"mobile" forKey:@"do"];
     [childDic setValue:@"app.delivery.lists.scrapedapp" forKey:@"r"];
     [childDic setValue:@"1" forKey:@"type"];
+    [childDic setValue:self.appMger.locY forKey:@"lat"];
+    [childDic setValue:self.appMger.locX forKey:@"lng"];
+    [childDic setValue:self.appMger.userID forKey:@"openid"];
 //    [childDic setValue:@"1" forKey:@"order"];
     
     
@@ -276,6 +285,11 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
     self.appMger.locY = [NSString stringWithFormat:@"%f",userLocation.location.coordinate.latitude];
     [m_mapView updateLocationData:userLocation];
     
+    if (refreshCount == 0) {
+        [self.listArr removeAllObjects];
+        [self requestNewTask];
+    }
+   
 }
 
 /**

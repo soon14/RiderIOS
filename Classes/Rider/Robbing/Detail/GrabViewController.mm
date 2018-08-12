@@ -41,9 +41,7 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
     
     CLLocationCoordinate2D  myPoint;            //现在的坐标位置
     CLLocationCoordinate2D  startPoint;         //商家的坐标位置
-    AppContextManager *m_appMger;
-     int firstLine;                             //第一次请求路径
-    GrabHeaderView *headerView;
+    int firstLine;                             //第一次请求路径
     
     float currentY;
     BOOL isNotUp;
@@ -51,16 +49,22 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
     UIView *bottomView;                         //地步接单按钮视图
    
     NSArray *infoArr;
-    NSMutableArray *detailArr;
+    
 }
 @property(nonatomic,strong)UITableView *m_grabTableView;
 @property(nonatomic,weak)IBOutlet UIView *m_distributionView;
 @property(nonatomic,weak)IBOutlet UIButton *contactBtn;
 @property(nonatomic,weak)IBOutlet UIButton *statusBtn;
 @property(nonatomic,strong) UIButton *upBtn;
+@property(nonatomic,strong) GrabHeaderView *headerView;
 
 //顶部视图高度，默认为屏幕的2/3
 @property (nonatomic) float heightOfTopView;
+@property (nonatomic, strong) AppContextManager *appMger;
+@property(nonatomic,strong) MBProgressHUD *hubView;
+@property(nonatomic,strong)NSMutableArray *infoKeyArr;
+@property(nonatomic,strong)NSMutableArray *detailArr;
+@property(nonatomic,strong)NSMutableArray *otherArr;
 @end
 
 @implementation GrabViewController
@@ -70,28 +74,30 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-//    coords = [[NSMutableArray alloc]initWithCapacity:0];
+    self.appMger = [AppContextManager shareManager];
 
     infoArr = [[NSArray alloc]initWithObjects:@"订单编号",@"期望送达",@"发票",@"备注信息",nil];
-    detailArr = [[NSMutableArray alloc]initWithCapacity:0];
-    NSArray *nameArr = [[NSArray alloc]initWithObjects:@"燕麦面包",@"法式长棍",@"甜甜圈",@"汉堡",@"配送费",@"餐盒费",@"63.30", nil];
-    NSArray *numArr = [[NSArray alloc]initWithObjects:@"1",@"2",@"1",@"3",@"1",@"",@"", nil];
-    NSArray *moneyArr = [[NSArray alloc]initWithObjects:@"20.00",@"16.00",@"20.30",@"25.00", @"16.00",@"20.30",@"25.00",nil];
+    self.detailArr = [[NSMutableArray alloc]initWithCapacity:0];
+    self.infoKeyArr = [[NSMutableArray alloc]initWithCapacity:0];
+    self.otherArr = [[NSMutableArray alloc]initWithCapacity:0];
+//    NSArray *nameArr = [[NSArray alloc]initWithObjects:@"燕麦面包",@"法式长棍",@"甜甜圈",@"汉堡",@"配送费",@"餐盒费",@"63.30", nil];
+//    NSArray *numArr = [[NSArray alloc]initWithObjects:@"1",@"2",@"1",@"3",@"1",@"",@"", nil];
+//    NSArray *moneyArr = [[NSArray alloc]initWithObjects:@"20.00",@"16.00",@"20.30",@"25.00", @"16.00",@"20.30",@"25.00",nil];
     
-    for (int i = 0; i< [nameArr count]; i ++) {
-        OrderDetailMode *mode = [[OrderDetailMode alloc]init];
-        mode.name = [nameArr objectAtIndex:i];
-        mode.num = [numArr objectAtIndex:i];
-        mode.money = [moneyArr objectAtIndex:i];
-        [detailArr addObject:mode];
-    }
-    
+//    for (int i = 0; i< [nameArr count]; i ++) {
+//        OrderDetailMode *mode = [[OrderDetailMode alloc]init];
+//        mode.name = [nameArr objectAtIndex:i];
+//        mode.num = [numArr objectAtIndex:i];
+//        mode.money = [moneyArr objectAtIndex:i];
+//        [detailArr addObject:mode];
+//    }
+//
     firstLine = 0;
     
-     headerView = [GrabHeaderView defaultView];
+     self.headerView = [GrabHeaderView defaultView];
     
       UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(heiddenTableView)];
-      [headerView addGestureRecognizer:tapGesture];
+      [self.headerView addGestureRecognizer:tapGesture];
     
      m_mapView = [[BMKMapView alloc]init];
      [self.view addSubview:m_mapView];
@@ -137,8 +143,6 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
     
     //路线规划
     m_routesearch = [[BMKRouteSearch alloc]init];
-    
-    m_appMger = [AppContextManager shareManager];
     
     m_mapView.sd_layout
     .widthIs(Screen_width)
@@ -226,6 +230,12 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
     }
 
     [self getAnnotation];
+    
+    self.hubView = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:self.hubView];
+    self.hubView.label.text = @"加载中...";
+    [self.hubView hideAnimated:YES];
+    
 }
 
 
@@ -305,8 +315,8 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
 
 - (void)onRidingSearch{
     
-    CLLocationDegrees y = [m_appMger.locY floatValue];
-    CLLocationDegrees x = [m_appMger.locX floatValue];
+    CLLocationDegrees y = [self.appMger.locY floatValue];
+    CLLocationDegrees x = [self.appMger.locX floatValue];
     
     BMKPlanNode* start = [[BMKPlanNode alloc]init];
     start.pt = CLLocationCoordinate2DMake(y,x);
@@ -341,13 +351,16 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
  */
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
-    m_appMger.locX = [NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude];
-    m_appMger.locY = [NSString stringWithFormat:@"%f",userLocation.location.coordinate.latitude];
+    self.appMger.locX = [NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude];
+    self.appMger.locY = [NSString stringWithFormat:@"%f",userLocation.location.coordinate.latitude];
 
 //    NSArray* array = [NSArray arrayWithArray:m_mapView.annotations];
 //    [m_mapView removeAnnotation:[array objectAtIndex:0]];
 //     [m_mapView removeAnnotation:[array objectAtIndex:[array count]-1]];
     
+    [self.infoKeyArr removeAllObjects];
+    [self.detailArr removeAllObjects];
+    [self requestDetail];
     [m_mapView removeAnnotations:m_mapView.annotations];
 
     [self onRidingSearch];
@@ -619,7 +632,7 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
             return Screen_height-50;
         }
     }
-    if (section == 4) {
+    if (section == 3) {
         return 10;
     }
     else
@@ -642,7 +655,7 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
 {
     
     if (section == 0) {
-        return headerView;
+        return self.headerView;
     }
     else
     {
@@ -655,9 +668,9 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
         else if (section == 2) {
             view.titleLbl.text = @"订单信息";
         }
-        else if (section == 3) {
-            view.titleLbl.text = @"收入详情";
-        }
+//        else if (section == 3) {
+//            view.titleLbl.text = @"收入详情";
+//        }
         else
         {
             view.titleLbl.text = @"";
@@ -669,7 +682,7 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5;
+    return 4;
 }
 
 
@@ -679,22 +692,22 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
         return 0;
     }
     else if (section == 1) {
-        return [detailArr count];
+        return [self.detailArr count];
     }
     else if (section == 2) {
         return [infoArr count];
     }
-    else if (section == 3) {
-        return 1;
-    }
-    
+//    else if (section == 3) {
+//        return 1;
+//    }
+//
     return 1;
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 4)
+    if(indexPath.section == 3)
     {
         return 80;
     }
@@ -713,7 +726,7 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
                                             reuseIdentifier:orderDetailCellIndentifier];
         }
        
-        [cell setData:detailArr count:[detailArr count] index:indexPath.row withIsLast:true];
+        [cell setData:self.detailArr count:[self.detailArr count] index:indexPath.row withIsLast:true];
         cell.backgroundColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -727,24 +740,29 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
             cell = [[OrderInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                    reuseIdentifier:orderInfoCellIndentifier];
         }
-        [cell setTitle:[infoArr objectAtIndex:indexPath.row] withData:@""];
-        cell.backgroundColor = [UIColor whiteColor];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-    }
-    else if (indexPath.section == 3)
-    {
-        GrabTableViewCell *cell = (GrabTableViewCell *)[tableView dequeueReusableCellWithIdentifier:grabCellIndentifier];
         
-        if (cell == nil)
-        {
-            cell = [[GrabTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                            reuseIdentifier:grabCellIndentifier];
+        if (self.infoKeyArr.count > indexPath.row) {
+            [cell setTitle:[infoArr objectAtIndex:indexPath.row] withData:self.infoKeyArr[indexPath.row]];
         }
+        
         cell.backgroundColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
+//    else if (indexPath.section == 3)
+//    {
+//        GrabTableViewCell *cell = (GrabTableViewCell *)[tableView dequeueReusableCellWithIdentifier:grabCellIndentifier];
+//
+//        if (cell == nil)
+//        {
+//            cell = [[GrabTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+//                                            reuseIdentifier:grabCellIndentifier];
+//        }
+//
+//        cell.backgroundColor = [UIColor whiteColor];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        return cell;
+//    }
     
     StatusTimeTableViewCell *cell = (StatusTimeTableViewCell *)[tableView dequeueReusableCellWithIdentifier:statusCellIndentifier];
 
@@ -778,6 +796,76 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
 }
 
 
+- (void)requestDetail
+{
+    [self.hubView showAnimated:YES];
+    
+    // http://www.pujiante.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=app.delivery.lists.detailapp&order_id=&type=1&lat=&lng=&openid=
+    NSMutableDictionary *childDic = [[NSMutableDictionary alloc]init];
+    [childDic setValue:@"3" forKey:@"i"];
+    [childDic setValue:@"entry" forKey:@"c"];
+    [childDic setValue:@"ewei_shopv2" forKey:@"m"];
+    [childDic setValue:@"mobile" forKey:@"do"];
+    [childDic setValue:@"app.delivery.lists.detailapp" forKey:@"r"];
+    [childDic setValue:self.orderID forKey:@"order_id"];
+    [childDic setValue:@"1" forKey:@"type1"];
+    [childDic setValue:self.appMger.locY forKey:@"lat"];
+    [childDic setValue:self.appMger.locX forKey:@"lng"];
+    [childDic setValue:self.appMger.userID forKey:@"openid"];
+    
+    [AFHttpRequestManagement PostHttpDataWithUrlStr:@"" Dic:childDic SuccessBlock:^(id responseObject) {
+        
+        SBJsonParser *json = [[SBJsonParser alloc]init];
+        NSDictionary *responseDic = [json objectWithString:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]];
+        LogInfo(@"responseDic = %@ ",responseDic);
+        
+        int errorCode = [[responseDic valueForKey:@"error"] intValue];
+        if (errorCode == 0)
+        {
+            NSMutableArray *orderArray = [[NSMutableArray alloc] initWithCapacity:0];
+            NSDictionary *orderDic = [responseDic valueForKey:@"order"];
+            [orderArray addObject:[orderDic valueForKey:@"logistics_price"]];
+            [orderArray addObject:[orderDic valueForKey:@"expect_time"]];
+            [orderArray addObject:[orderDic valueForKey:@"shop_name"]];
+            [orderArray addObject:[orderDic valueForKey:@"addr"]];
+            [orderArray addObject:[orderDic valueForKey:@"d2"]];
+            [self.headerView sendDataArr:orderArray];
+            
+//            NSDictionary *infoDic = [responseDic valueForKey:@"order"];
+            [self.infoKeyArr  addObject:[orderArray valueForKey:@"create_time"]];
+            [self.infoKeyArr  addObject:[orderArray valueForKey:@"hope_time"]];
+            [self.infoKeyArr  addObject:[orderArray valueForKey:@"invoice"]];
+            [self.infoKeyArr  addObject:[orderArray valueForKey:@"remark"]];
+            
+            
+
+            NSArray *listArray = [responseDic valueForKey:@"lists"];
+            NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
+            for (int i = 0; i<[listArray count]; i++)
+            {
+                OrderDetailMode *listModel = [[OrderDetailMode alloc] init];
+                [listModel parseFromDictionary:[listArray objectAtIndex:i]];
+                [requestArray addObject:listModel];
+            }
+//
+            [self.detailArr addObjectsFromArray:requestArray];
+            
+            
+            [self.m_grabTableView reloadData];
+        }
+        else
+        {
+            NSString *errorMessage = [responseDic valueForKey:@"message"];
+            [ShowErrorMgs sendErrorCode:errorMessage withCtr:self];
+        }
+        
+        [self.hubView hideAnimated:YES];
+    } FailureBlock:^(id error) {
+        NSLog(@"error == %@",error);
+        [self.hubView hideAnimated:YES];
+        [ShowErrorMgs sendErrorCode:@"服务器错误，请稍后重试！" withCtr:self];
+    }];
+}
 
 
 - (void)dealloc {

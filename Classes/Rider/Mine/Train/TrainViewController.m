@@ -8,7 +8,7 @@
 
 #import "TrainViewController.h"
 
-@interface TrainViewController ()
+@interface TrainViewController ()<UIWebViewDelegate>
 
 @property(nonatomic,weak)IBOutlet UIWebView *trainWebView;
 @property(nonatomic,strong) MBProgressHUD *hubView;
@@ -27,13 +27,21 @@
     
     self.appMger = [AppContextManager shareManager];
     
-    [self requestTrain];
+    [self.hubView showAnimated:YES];
+    
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.pjtwlsj.com/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=delivery.train.index&isapp=1&openid=%@",self.appMger.userID]];
+    NSURLRequest * request = [NSURLRequest requestWithURL:url];
+    [self.trainWebView loadRequest:request];
+
+//    [self requestTrain];
 }
 
 //即将加载某个请求的时候调用
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSLog(@"%@",request.URL.absoluteString);
+//    NSLog(@"%@",request.URL.absoluteString);
+   
+    
     //    //简单的请求拦截处理
     //    NSString *strM = request.URL.absoluteString;
     //    if ([strM containsString:@"360"]) {

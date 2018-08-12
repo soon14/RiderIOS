@@ -13,4 +13,6 @@
 + (id)defaultView;
 
 - (void)isHiddenView;
+
+- (void)sendDataArr:(NSMutableArray *)dataArr;
 @end

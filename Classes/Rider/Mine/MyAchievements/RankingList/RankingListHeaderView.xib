@@ -166,9 +166,18 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="firstCompanyLbl" destination="IXl-Bu-fsX" id="CiT-d7-9EV"/>
                 <outlet property="firstImageView" destination="DmR-dT-eFz" id="Vld-Si-p9w"/>
+                <outlet property="firstNameLbl" destination="1j8-Cx-dMU" id="0ko-Yg-aCK"/>
+                <outlet property="firstNumLbl" destination="QUo-tU-StG" id="1M2-jo-moU"/>
+                <outlet property="secCompanyLbl" destination="Woe-rV-CEf" id="VmE-7f-7bU"/>
+                <outlet property="secNameLbl" destination="aSs-zF-cWp" id="Vn5-ri-tMl"/>
+                <outlet property="secNumLbl" destination="PyN-cW-339" id="xwt-HZ-7V0"/>
                 <outlet property="secondImageView" destination="M3A-zh-eYB" id="aZh-qf-lJN"/>
+                <outlet property="thirdCompanyLbl" destination="grx-Pa-CcS" id="koa-97-LpY"/>
                 <outlet property="thirdImageView" destination="EzJ-ao-bk7" id="jHB-U1-ac6"/>
+                <outlet property="thirdNameLbl" destination="G6u-RW-OhT" id="1nE-v9-qSM"/>
+                <outlet property="thirdNumLbl" destination="tKc-1h-Rcr" id="7tu-i3-k0H"/>
             </connections>
             <point key="canvasLocation" x="31.5" y="-51.5"/>
         </view>

@@ -13,4 +13,5 @@
 
 @interface GrabViewController : UIViewController<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKRouteSearchDelegate>
 @property(nonatomic,strong)NSString *grabType;
+@property(nonatomic,strong)NSString *orderID;
 @end

@@ -10,10 +10,12 @@
 
 #define APPSTATUS                           @"status"
 #define APPSHOPNAME                         @"shop_name"
-#define APPADDRESS                          @"addrmerch"
+#define APPADDRESS                          @"addr"
 #define APPUSERDIS                          @"d"
 #define APPSHOPRDIS                         @"d1"
 #define APPPRICE                            @"logistics_price"
+#define APPORDERID                          @"order_id"
+
 
 @implementation DistributionMode
 
@@ -77,6 +79,16 @@
     else
     {
         self.price = [NSString stringWithFormat:@"%@",[dic objectForKey:APPPRICE]];
+    }
+    
+    if ([dic objectForKey:APPORDERID] == nil ||
+        [dic objectForKey:APPORDERID] == [NSNull null])
+    {
+        self.orderID = @"";
+    }
+    else
+    {
+        self.orderID = [NSString stringWithFormat:@"%@",[dic objectForKey:APPORDERID]];
     }
 }
 @end

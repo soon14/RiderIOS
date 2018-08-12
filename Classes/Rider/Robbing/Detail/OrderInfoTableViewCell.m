@@ -26,6 +26,7 @@
 - (void)setTitle:(NSString *)title withData:(NSString *)data
 {
     self.titleLbl.text = title;
+    self.contentLbl.text = data;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

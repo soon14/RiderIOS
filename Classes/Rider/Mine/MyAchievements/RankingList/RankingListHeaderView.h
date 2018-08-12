@@ -11,5 +11,5 @@
 @interface RankingListHeaderView : UIView
 + (id)defaultView;
 
-- (void)sendData:(NSMutableArray *)titleArr withImage:(NSMutableArray *)imageArr;
+- (void)sendData:(NSMutableArray *)dataArr withType:(RankListType)type;
 @end

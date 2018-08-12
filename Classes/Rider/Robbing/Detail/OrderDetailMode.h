@@ -7,9 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BasicModel.h"
 
-@interface OrderDetailMode : NSObject
+@interface OrderDetailMode : BasicModel
 @property(nonatomic,strong)NSString *name;
 @property(nonatomic,strong)NSString *num;
 @property(nonatomic,strong)NSString *money;
+
+@property(nonatomic,strong)NSString *price;
+@property(nonatomic,strong)NSString *title;
+@property(nonatomic,strong)NSString *total;
+@property(nonatomic,strong)NSString *allprice;
 @end

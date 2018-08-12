@@ -179,7 +179,12 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="distanceLbl" destination="YW3-Pt-sik" id="cLe-j7-ELS"/>
                 <outlet property="infoView" destination="RKl-Lc-xnV" id="qfd-Zg-r9H"/>
+                <outlet property="merchAddrLbl" destination="2ed-kC-cf1" id="N85-7O-pie"/>
+                <outlet property="moneyLbl" destination="gZa-Zi-ZXL" id="Ru5-4v-KP9"/>
+                <outlet property="timeLbl" destination="TrW-vo-wr6" id="QnX-AM-Xkm"/>
+                <outlet property="userAddrLbl" destination="HJh-1u-Ceh" id="ggc-6J-x4Y"/>
             </connections>
             <point key="canvasLocation" x="-126.5" y="-308.5"/>
         </view>

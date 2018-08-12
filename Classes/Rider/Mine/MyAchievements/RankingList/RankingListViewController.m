@@ -18,8 +18,7 @@ static NSString *const cellIndentifier = @"RankingListTableViewCell";
 {
     
     IBOutlet UISegmentedControl *m_rankingListSgn;
-    RankingListHeaderView *headerView;
-    RankListType ranType;
+   
 }
 @property(nonatomic,weak)IBOutlet UITableView *m_rankingListTab;
 @property(nonatomic,weak)IBOutlet UILabel *rankLbl;
@@ -29,6 +28,8 @@ static NSString *const cellIndentifier = @"RankingListTableViewCell";
 @property(nonatomic,strong) MBProgressHUD *hubView;
 @property(nonatomic,strong) AppContextManager *appMger;
 @property(nonatomic,strong)NSMutableArray *m_tabArr;
+@property(nonatomic,strong)RankingListHeaderView *headerView;
+@property(nonatomic,assign) RankListType ranType;
 @end
 
 @implementation RankingListViewController
@@ -61,8 +62,8 @@ static NSString *const cellIndentifier = @"RankingListTableViewCell";
     self.m_rankingListTab.separatorStyle = UITableViewCellSelectionStyleNone;
     self.m_rankingListTab.backgroundColor = [UIColor colorWithHexString:@"2196d9"];
     
-    headerView = [RankingListHeaderView defaultView];
-    [headerView sendData:nil withImage:nil];
+    self.headerView = [RankingListHeaderView defaultView];
+   
     
     self.hubView = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:self.hubView];
@@ -79,19 +80,19 @@ static NSString *const cellIndentifier = @"RankingListTableViewCell";
     [self.m_tabArr removeAllObjects];
     if (sender.selectedSegmentIndex == 0) {
         NSLog(@"1");
-        ranType = dayOrders;
+        self.ranType = dayOrders;
          [self requestRankList:@"1"];
     }else if (sender.selectedSegmentIndex == 1){
         NSLog(@"2");
-        ranType = dayMileage;
+        self.ranType = dayMileage;
          [self requestRankList:@"2"];
     }else if (sender.selectedSegmentIndex == 2){
         NSLog(@"3");
-        ranType = monthOrders;
+        self.ranType = monthOrders;
         [self requestRankList:@"3"];
     }else if (sender.selectedSegmentIndex == 3){
         NSLog(@"4");
-        ranType = monthMileage;
+        self.ranType = monthMileage;
         [self requestRankList:@"4"];
     }
     [self.m_rankingListTab reloadData];
@@ -114,7 +115,7 @@ static NSString *const cellIndentifier = @"RankingListTableViewCell";
 //添加标头中的内容
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return headerView;
+    return self.headerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -146,17 +147,12 @@ static NSString *const cellIndentifier = @"RankingListTableViewCell";
         cell = [[RankingListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                       reuseIdentifier:cellIndentifier];
     }
-    
-  
-    
-    [cell setMode:[self.m_tabArr objectAtIndex:indexPath.row] withType:ranType index:indexPath.row];
+
+    [cell setMode:[self.m_tabArr objectAtIndex:indexPath.row] withType:self.ranType index:indexPath.row];
     cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
-    
-    
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -190,7 +186,7 @@ static NSString *const cellIndentifier = @"RankingListTableViewCell";
         int errorCode = [[responseDic valueForKey:@"error"] intValue];
         if (errorCode == 0)
         {
-            NSArray *listArray = [responseDic valueForKey:@"data"];
+            NSArray *listArray = [responseDic valueForKey:@"data2"];
             NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
             for (int i = 0; i<[listArray count]; i++)
             {
@@ -201,10 +197,22 @@ static NSString *const cellIndentifier = @"RankingListTableViewCell";
 
             [self.m_tabArr addObjectsFromArray:requestArray];
             
+            NSArray *listArray1 = [responseDic valueForKey:@"data1"];
+            NSMutableArray *requestArray1 = [[NSMutableArray alloc] initWithCapacity:0];
+            for (int i = 0; i<[listArray1 count]; i++)
+            {
+                RankingListMode *listModel = [[RankingListMode alloc] init];
+                [listModel parseFromDictionary:[listArray1 objectAtIndex:i]];
+                [requestArray1 addObject:listModel];
+            }
+             [self.headerView sendData:requestArray1 withType:self.ranType];
+            
             self.rankLbl.text =[[responseDic valueForKey:@"rank"]valueForKey:@"rank"];
             self.nameLbl.text =[[responseDic valueForKey:@"rank"]valueForKey:@"name"];
-            self.numLbl.text =[[responseDic valueForKey:@"rank"]valueForKey:@"count"];
+            self.numLbl.text =[[responseDic valueForKey:@"rank"]valueForKey:@"distance"];
+            
             if ([type isEqualToString:@"1"] || [type isEqualToString:@"3"]) {
+                
                  self.dwLbl.text = @"单";
             }
             else

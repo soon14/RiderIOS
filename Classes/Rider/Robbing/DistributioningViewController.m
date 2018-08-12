@@ -126,12 +126,14 @@ static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    DistributionMode *mode = self.listArr[indexPath.row];
     
     UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     //将第二个控制器实例化，"SecondViewController"为我们设置的控制器的ID
     GrabViewController *detailVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"GrabViewController"];
     detailVC.grabType = @"distribution";
     detailVC.hidesBottomBarWhenPushed = YES;
+    detailVC.orderID = mode.orderID;
     //    detailVC.entranceStr = @"派单中";
     [self.navigationController pushViewController:detailVC animated:YES];
 }
