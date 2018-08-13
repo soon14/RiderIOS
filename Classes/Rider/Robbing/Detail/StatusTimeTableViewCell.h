@@ -10,4 +10,5 @@
 
 @interface StatusTimeTableViewCell : UITableViewCell
 
+- (void)sendData:(NSMutableArray *)dataArr;
 @end

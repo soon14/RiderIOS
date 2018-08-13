@@ -360,6 +360,7 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
     
     [self.infoKeyArr removeAllObjects];
     [self.detailArr removeAllObjects];
+    [self.otherArr removeAllObjects];
     [self requestDetail];
     [m_mapView removeAnnotations:m_mapView.annotations];
 
@@ -745,6 +746,7 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
             [cell setTitle:[infoArr objectAtIndex:indexPath.row] withData:self.infoKeyArr[indexPath.row]];
         }
         
+
         cell.backgroundColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -771,6 +773,11 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
         cell = [[StatusTimeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                         reuseIdentifier:statusCellIndentifier];
     }
+    
+    if (self.otherArr.count > indexPath.row) {
+        [cell sendData:self.otherArr];
+    }
+    
     cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -832,12 +839,16 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
             [self.headerView sendDataArr:orderArray];
             
 //            NSDictionary *infoDic = [responseDic valueForKey:@"order"];
-            [self.infoKeyArr  addObject:[orderArray valueForKey:@"create_time"]];
-            [self.infoKeyArr  addObject:[orderArray valueForKey:@"hope_time"]];
-            [self.infoKeyArr  addObject:[orderArray valueForKey:@"invoice"]];
-            [self.infoKeyArr  addObject:[orderArray valueForKey:@"remark"]];
             
+            [self.infoKeyArr  addObject:[orderDic valueForKey:@"create_time"]];
+            [self.infoKeyArr  addObject:[orderDic valueForKey:@"hope_time"]];
+            [self.infoKeyArr  addObject:[orderDic valueForKey:@"invoice"]];
+            [self.infoKeyArr  addObject:[orderDic valueForKey:@"remark"]];
             
+            [self.otherArr  addObject:[orderDic valueForKey:@"update_time"]];
+            [self.otherArr  addObject:[orderDic valueForKey:@"get_time"]];
+            [self.otherArr  addObject:[orderDic valueForKey:@"end_time"]];
+        
 
             NSArray *listArray = [responseDic valueForKey:@"lists"];
             NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
