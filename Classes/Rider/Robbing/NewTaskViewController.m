@@ -183,6 +183,8 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
     [cell setData:self.listArr[indexPath.row] indexPath:indexPath withView:@"Grab"];
     cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+    
     return cell;
 }
 
@@ -263,9 +265,9 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
 }
 
 //抢单
-- (void)requestQD
+- (void)requestQD:(NSString *)sid
 {
-    refreshCount = 1;
+   
     [self.hubView showAnimated:YES];
     
     //  http://www.pujiante.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=app.delivery.lists.handleapp&openid=&sid=
@@ -275,7 +277,7 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
     [childDic setValue:@"ewei_shopv2" forKey:@"m"];
     [childDic setValue:@"mobile" forKey:@"do"];
     [childDic setValue:@"app.delivery.lists.handleapp" forKey:@"r"];
-    [childDic setValue:self.appMger.riderID forKey:@"sid"];
+    [childDic setValue:sid forKey:@"sid"];
     [childDic setValue:self.appMger.userID forKey:@"openid"];
 
     
@@ -318,7 +320,7 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
 - (void)orderBtn:(NSInteger)index
 {
     NSLog(@"btn.tag == %ld",index);
-    
+//        [self requestQD:@""];
      self.guideView.hidden = NO;
     if (self.prohibitSlide) {
         self.prohibitSlide(NO);
