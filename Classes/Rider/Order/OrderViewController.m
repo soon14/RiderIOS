@@ -11,18 +11,22 @@
 #import "OrderTableViewCell.h"
 #import "OrderDetailViewController.h"
 #import "GridScreenView.h"
+#import "DistributionMode.h"
 
 static NSString *const orderCellIndentifier = @"OrderTableViewCell";
 
 @interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 {
-    NSArray *infoArr;
+    
     NSMutableArray *detailArr;
     NSString *statusStr;
     NSMutableArray *mothArr;
 }
 @property(nonatomic,weak)IBOutlet UITableView *orderListView;
 @property(nonatomic,strong)GridScreenView *historyView;
+@property (nonatomic, strong) AppContextManager *appMger;
+@property(nonatomic,strong) MBProgressHUD *hubView;
+@property(nonatomic,strong)NSMutableArray *infoArr;
 @end
 
 @implementation OrderViewController
@@ -38,6 +42,10 @@ static NSString *const orderCellIndentifier = @"OrderTableViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+     self.appMger = [AppContextManager shareManager];
+    
+    self.infoArr = [[NSMutableArray alloc]initWithCapacity:0];
     
      [self.orderListView registerNib:[UINib nibWithNibName:@"OrderTableViewCell" bundle:nil] forCellReuseIdentifier:orderCellIndentifier];
     
@@ -61,6 +69,13 @@ static NSString *const orderCellIndentifier = @"OrderTableViewCell";
     
     self.historyView.hidden = YES;
     [self.view addSubview:self.historyView];
+    
+    self.hubView = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:self.hubView];
+    self.hubView.label.text = @"加载中...";
+    [self.hubView hideAnimated:YES];
+    
+    [self requestOrderList];
 }
 
 - (IBAction)historyView:(id)sender
@@ -102,7 +117,7 @@ static NSString *const orderCellIndentifier = @"OrderTableViewCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return self.infoArr.count;
     
 }
 
@@ -122,7 +137,7 @@ static NSString *const orderCellIndentifier = @"OrderTableViewCell";
         cell = [[OrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                               reuseIdentifier:orderCellIndentifier];
     }
-    [cell setIndex:indexPath.row];
+    [cell setIndex:indexPath.row withData:self.infoArr[indexPath.row]];
     cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -153,9 +168,6 @@ static NSString *const orderCellIndentifier = @"OrderTableViewCell";
         
         [self performSegueWithIdentifier:@"goCancelDetail" sender:nil];
     }
-    
-    
-    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -164,7 +176,57 @@ static NSString *const orderCellIndentifier = @"OrderTableViewCell";
             OrderDetailViewController *detailCtr = segue.destinationViewController;
             detailCtr.orderStatus = statusStr;
         }
+}
+
+
+- (void)requestOrderList
+{
+    [self.hubView showAnimated:YES];
     
+    // http://www.pujiante.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=app.delivery.lists.finishedapp&type=&order=
+    NSMutableDictionary *childDic = [[NSMutableDictionary alloc]init];
+    [childDic setValue:@"3" forKey:@"i"];
+    [childDic setValue:@"entry" forKey:@"c"];
+    [childDic setValue:@"ewei_shopv2" forKey:@"m"];
+    [childDic setValue:@"mobile" forKey:@"do"];
+    [childDic setValue:@"app.delivery.lists.finishedapp" forKey:@"r"];
+    [childDic setValue:@"1" forKey:@"type"];
+    [childDic setValue:self.appMger.userID forKey:@"openid"];
+    
+    
+    [AFHttpRequestManagement PostHttpDataWithUrlStr:@"" Dic:childDic SuccessBlock:^(id responseObject) {
+        
+        SBJsonParser *json = [[SBJsonParser alloc]init];
+        NSDictionary *responseDic = [json objectWithString:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]];
+        LogInfo(@"responseDic = %@ ",responseDic);
+        
+        int errorCode = [[responseDic valueForKey:@"error"] intValue];
+        if (errorCode == 0)
+        {
+            NSArray *listArray = [responseDic valueForKey:@"list"];
+            NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
+            for (int i = 0; i<[listArray count]; i++)
+            {
+                DistributionMode *listModel = [[DistributionMode alloc] init];
+                [listModel parseFromDictionary:[listArray objectAtIndex:i]];
+                [requestArray addObject:listModel];
+            }
+
+            [self.infoArr addObjectsFromArray:requestArray];
+            [self.orderListView reloadData];
+        }
+        else
+        {
+            NSString *errorMessage = [responseDic valueForKey:@"message"];
+            [ShowErrorMgs sendErrorCode:errorMessage withCtr:self];
+        }
+        
+        [self.hubView hideAnimated:YES];
+    } FailureBlock:^(id error) {
+        NSLog(@"error == %@",error);
+        [self.hubView hideAnimated:YES];
+        [ShowErrorMgs sendErrorCode:@"服务器错误，请稍后重试！" withCtr:self];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

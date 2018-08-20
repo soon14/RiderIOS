@@ -280,8 +280,6 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
     [childDic setValue:sid forKey:@"sid"];
     [childDic setValue:self.appMger.userID forKey:@"openid"];
 
-    
-    
     [AFHttpRequestManagement PostHttpDataWithUrlStr:@"" Dic:childDic SuccessBlock:^(id responseObject) {
         
         SBJsonParser *json = [[SBJsonParser alloc]init];
@@ -291,17 +289,19 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
         int errorCode = [[responseDic valueForKey:@"error"] intValue];
         if (errorCode == 0)
         {
-            NSArray *listArray = [responseDic valueForKey:@"list"];
-            NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
-            for (int i = 0; i<[listArray count]; i++)
-            {
-                DistributionMode *listModel = [[DistributionMode alloc] init];
-                [listModel parseFromDictionary:[listArray objectAtIndex:i]];
-                [requestArray addObject:listModel];
-            }
-            
-            [self.listArr addObjectsFromArray:requestArray];
-            [self.m_listTaleView reloadData];
+//            NSArray *listArray = [responseDic valueForKey:@"list"];
+//            NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
+//            for (int i = 0; i<[listArray count]; i++)
+//            {
+//                DistributionMode *listModel = [[DistributionMode alloc] init];
+//                [listModel parseFromDictionary:[listArray objectAtIndex:i]];
+//                [requestArray addObject:listModel];
+//            }
+//
+//            [self.listArr addObjectsFromArray:requestArray];
+//            [self.m_listTaleView reloadData];
+             [self.listArr removeAllObjects];
+             [self requestNewTask];
         }
         else
         {
@@ -319,12 +319,13 @@ static NSString *const listCellIndentifier = @"HomeTableViewCell";
 
 - (void)orderBtn:(NSInteger)index
 {
-    NSLog(@"btn.tag == %ld",index);
-//        [self requestQD:@""];
-     self.guideView.hidden = NO;
-    if (self.prohibitSlide) {
-        self.prohibitSlide(NO);
-    }
+//    NSLog(@"btn.tag == %ld",index);
+      DistributionMode *mode = self.listArr[index];
+        [self requestQD:mode.orderID];
+//     self.guideView.hidden = NO;
+//    if (self.prohibitSlide) {
+//        self.prohibitSlide(NO);
+//    }
 }
 
 #pragma mark 百度地图委托方法

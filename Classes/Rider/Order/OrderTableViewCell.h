@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DistributionMode.h"
 
 @interface OrderTableViewCell : UITableViewCell
 
-- (void)setIndex:(NSInteger)indexRow;
+- (void)setIndex:(NSInteger)indexRow withData:(DistributionMode *)mode;
 
 @end

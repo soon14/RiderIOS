@@ -112,13 +112,15 @@ static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
                                         reuseIdentifier:listCellIndentifier];
     }
     [cell setType:@"Stay" indexPath:indexPath withData:self.listArr[indexPath.row]];
-
+    __weak typeof(self) weakSelf = self;
     cell.didContactButton = ^(NSInteger idx) {
         NSLog(@"Contactidx == %lu",idx);
     };
     
     cell.didStatusButton = ^(NSInteger idx) {
-         NSLog(@"Statusidx == %lu",idx);
+//         NSLog(@"Statusidx == %lu",idx);
+         DistributionMode *mode = self.listArr[idx];
+        [weakSelf requestQH:mode.orderID];
     };
     
     cell.backgroundColor = [UIColor whiteColor];
@@ -226,17 +228,19 @@ static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
         int errorCode = [[responseDic valueForKey:@"error"] intValue];
         if (errorCode == 0)
         {
-            NSArray *listArray = [responseDic valueForKey:@"list"];
-            NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
-            for (int i = 0; i<[listArray count]; i++)
-            {
-                DistributionMode *listModel = [[DistributionMode alloc] init];
-                [listModel parseFromDictionary:[listArray objectAtIndex:i]];
-                [requestArray addObject:listModel];
-            }
-            
-            [self.listArr addObjectsFromArray:requestArray];
-            [self.m_listTaleView reloadData];
+//            NSArray *listArray = [responseDic valueForKey:@"list"];
+//            NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
+//            for (int i = 0; i<[listArray count]; i++)
+//            {
+//                DistributionMode *listModel = [[DistributionMode alloc] init];
+//                [listModel parseFromDictionary:[listArray objectAtIndex:i]];
+//                [requestArray addObject:listModel];
+//            }
+//            
+//            [self.listArr addObjectsFromArray:requestArray];
+             [self.listArr removeAllObjects];
+             [self requestStayDistribution];
+//            [self.m_listTaleView reloadData];
         }
         else
         {

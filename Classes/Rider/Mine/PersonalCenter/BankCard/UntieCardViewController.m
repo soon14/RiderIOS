@@ -16,14 +16,14 @@ static NSString *const cellIndentifier = @"UntieCardTableViewCell";
     
 }
 @property (nonatomic, strong) NSArray *titleArr;
-@property (nonatomic, strong) NSArray *keyArr;
+@property (nonatomic, strong) NSMutableArray *keyArr;
 @property (nonatomic, strong) IBOutlet UITableView *cardInfoTableView;
 @property (nonatomic, strong) AppContextManager *appMger;
 @property(nonatomic,strong) MBProgressHUD *hubView;
 @end
 
 @implementation UntieCardViewController
-@synthesize cardID;
+
 // 数据数组的懒加载
 -(NSArray *)titleArr
 {
@@ -33,10 +33,10 @@ static NSString *const cellIndentifier = @"UntieCardTableViewCell";
     return _titleArr;
 }
 
--(NSArray *)keyArr
+-(NSMutableArray *)keyArr
 {
     if (_keyArr == nil) {
-        _keyArr = [NSArray arrayWithObjects:@"中国银行储蓄卡",@"赵*勇",@"****  ****  ****  6420",nil];
+        _keyArr = [NSMutableArray arrayWithCapacity:0];
     }
     return _keyArr;
 }
@@ -47,6 +47,10 @@ static NSString *const cellIndentifier = @"UntieCardTableViewCell";
     
     self.appMger = [AppContextManager shareManager];
     
+    [self.keyArr addObject:self.bankMode.bankname];
+    [self.keyArr addObject:self.bankMode.name];
+    [self.keyArr addObject:self.bankMode.cardID];
+    
     [self.cardInfoTableView registerNib:[UINib nibWithNibName:@"UntieCardTableViewCell" bundle:nil] forCellReuseIdentifier:cellIndentifier];
     self.cardInfoTableView.separatorStyle = UITableViewCellSelectionStyleNone;
     self.cardInfoTableView.scrollEnabled = NO;
@@ -55,6 +59,8 @@ static NSString *const cellIndentifier = @"UntieCardTableViewCell";
     [self.view addSubview:self.hubView];
     self.hubView.label.text = @"加载中...";
     [self.hubView hideAnimated:YES];
+    
+    
 }
 
 - (IBAction)untieCardPress:(id)sender {
@@ -154,7 +160,7 @@ static NSString *const cellIndentifier = @"UntieCardTableViewCell";
     [childDic setValue:@"mobile" forKey:@"do"];
     [childDic setValue:@"app.delivery.set.deleetbankcardapp" forKey:@"r"];
     [childDic setValue:self.appMger.userID forKey:@"openid"];
-    [childDic setValue:self.cardID forKey:@"cid"];
+    [childDic setValue:self.bankMode.bankID forKey:@"cid"];
     
     
     [AFHttpRequestManagement PostHttpDataWithUrlStr:@"" Dic:childDic SuccessBlock:^(id responseObject) {
@@ -166,7 +172,7 @@ static NSString *const cellIndentifier = @"UntieCardTableViewCell";
         int errorCode = [[responseDic valueForKey:@"error"] intValue];
         if (errorCode == 0)
         {
-            
+            [self.navigationController popViewControllerAnimated:YES];
         }
         else
         {

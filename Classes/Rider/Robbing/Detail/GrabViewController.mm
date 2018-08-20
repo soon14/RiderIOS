@@ -239,7 +239,6 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
 }
 
 
-
 - (void)heiddenTableView
 {
     __weak typeof(self) weakself = self;
@@ -863,6 +862,47 @@ static NSString *const statusCellIndentifier = @"StatusTimeTableViewCell";
             
             
             [self.m_grabTableView reloadData];
+        }
+        else
+        {
+            NSString *errorMessage = [responseDic valueForKey:@"message"];
+            [ShowErrorMgs sendErrorCode:errorMessage withCtr:self];
+        }
+        
+        [self.hubView hideAnimated:YES];
+    } FailureBlock:^(id error) {
+        NSLog(@"error == %@",error);
+        [self.hubView hideAnimated:YES];
+        [ShowErrorMgs sendErrorCode:@"服务器错误，请稍后重试！" withCtr:self];
+    }];
+}
+
+//抢单
+- (void)requestQD:(NSString *)sid
+{
+    
+    [self.hubView showAnimated:YES];
+    
+    //  http://www.pujiante.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=app.delivery.lists.handleapp&openid=&sid=
+    NSMutableDictionary *childDic = [[NSMutableDictionary alloc]init];
+    [childDic setValue:@"3" forKey:@"i"];
+    [childDic setValue:@"entry" forKey:@"c"];
+    [childDic setValue:@"ewei_shopv2" forKey:@"m"];
+    [childDic setValue:@"mobile" forKey:@"do"];
+    [childDic setValue:@"app.delivery.lists.handleapp" forKey:@"r"];
+    [childDic setValue:sid forKey:@"sid"];
+    [childDic setValue:self.appMger.userID forKey:@"openid"];
+    
+    [AFHttpRequestManagement PostHttpDataWithUrlStr:@"" Dic:childDic SuccessBlock:^(id responseObject) {
+        
+        SBJsonParser *json = [[SBJsonParser alloc]init];
+        NSDictionary *responseDic = [json objectWithString:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]];
+        LogInfo(@"responseDic = %@ ",responseDic);
+        
+        int errorCode = [[responseDic valueForKey:@"error"] intValue];
+        if (errorCode == 0)
+        {
+            
         }
         else
         {

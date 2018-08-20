@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BankModel.h"
 
 @interface UntieCardViewController : UIViewController
 
-@property(nonatomic,strong)NSString *cardID;
+@property(nonatomic,strong)BankModel *bankMode;
 
 @end

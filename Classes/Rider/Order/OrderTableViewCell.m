@@ -17,6 +17,7 @@
 @property(nonatomic,weak)IBOutlet UILabel *take1Lbl;
 @property(nonatomic,weak)IBOutlet UILabel *giveLbl;
 @property(nonatomic,weak)IBOutlet UILabel *give1Lbl;
+@property(nonatomic,weak)IBOutlet UILabel *ydLbl;
 @end
 
 @implementation OrderTableViewCell
@@ -26,7 +27,7 @@
     // Initialization code
 }
 
-- (void)setIndex:(NSInteger)indexRow
+- (void)setIndex:(NSInteger)indexRow withData:(DistributionMode *)mode
 {
     self.takeLbl.textColor = [UIColor blackColor];
     self.take1Lbl.textColor = [UIColor blackColor];
@@ -34,7 +35,9 @@
     self.give1Lbl.textColor = [UIColor blackColor];
     self.timeLbl.textColor = [UIColor blackColor];
     self.stadusLbl.textColor = [UIColor blackColor];
-    
+    self.take1Lbl.text = mode.shop_name;
+    self.give1Lbl.text = mode.addrmerch;
+    self.ydLbl.text = @"运单号:111111111";
     if (indexRow == 0) {
         self.stadusLbl.text = @"结算中12.80元";
     }

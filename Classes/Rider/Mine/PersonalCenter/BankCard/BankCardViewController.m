@@ -10,16 +10,19 @@
 #import "BankCardTableViewCell.h"
 #import "AddBankCardViewController.h"
 #import "UntieCardViewController.h"
+#import "BankModel.h"
 
 static NSString *const cellIndentifier = @"BankCardTableViewCell";
 
 @interface BankCardViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-     NSMutableArray *cardArr;
+    
 }
 @property(nonatomic,weak)IBOutlet UITableView *m_cardTaleView;
 @property(nonatomic,strong) AppContextManager *appMger;
 @property(nonatomic,strong) MBProgressHUD *hubView;
+@property(nonatomic,strong)NSMutableArray *cardArr;
+@property(nonatomic,strong)BankModel *bankmode;
 @end
 
 @implementation BankCardViewController
@@ -28,7 +31,7 @@ static NSString *const cellIndentifier = @"BankCardTableViewCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.appMger = [AppContextManager shareManager];
-    cardArr = [[NSMutableArray alloc]initWithObjects:@"zggs",@"shpf",nil];
+    self.cardArr = [[NSMutableArray alloc]initWithCapacity:0];
     
     [self.m_cardTaleView registerNib:[UINib nibWithNibName:@"BankCardTableViewCell" bundle:nil] forCellReuseIdentifier:cellIndentifier];
     self.m_cardTaleView.separatorStyle = UITableViewCellSelectionStyleNone;
@@ -56,7 +59,7 @@ static NSString *const cellIndentifier = @"BankCardTableViewCell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return [cardArr count];
+    return [self.cardArr count];
     
 }
 
@@ -95,7 +98,7 @@ static NSString *const cellIndentifier = @"BankCardTableViewCell";
                                                   reuseIdentifier:cellIndentifier];
     }
     
-    [cell setData:@"" withName: cardArr[indexPath.row]];
+    [cell setData:@"" withName: self.cardArr[indexPath.row]];
     cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -103,8 +106,8 @@ static NSString *const cellIndentifier = @"BankCardTableViewCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-        [self performSegueWithIdentifier:@"goUntieCard" sender:nil];
+    self.bankmode =self.cardArr[indexPath.row];
+    [self performSegueWithIdentifier:@"goUntieCard" sender:nil];
     
 }
 
@@ -149,7 +152,7 @@ static NSString *const cellIndentifier = @"BankCardTableViewCell";
         }
         else if([segue.identifier isEqualToString:@"goUntieCard"]){
             UntieCardViewController *untieCtr = segue.destinationViewController;
-            untieCtr.cardID = @"1";
+            untieCtr.bankMode = self.bankmode;
         }
 }
 
@@ -178,19 +181,19 @@ static NSString *const cellIndentifier = @"BankCardTableViewCell";
         int errorCode = [[responseDic valueForKey:@"error"] intValue];
         if (errorCode == 0)
         {
-//            NSArray *listArray = [responseDic valueForKey:@"banklist"];
-//            NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
-//            for (int i = 0; i<[listArray count]; i++)
-//            {
-//
-//                BankModel *listModel = [[BankModel alloc] init];
-//                [listModel parseFromDictionary:[listArray objectAtIndex:i]];
-//                [requestArray addObject:listModel];
-//            }
-//
-//            [self.bankArr addObjectsFromArray:requestArray];
-//
-//            [self.m_bankPicker reloadAllComponents];
+            NSArray *listArray = [responseDic valueForKey:@"bank_info_list"];
+            NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
+            for (int i = 0; i<[listArray count]; i++)
+            {
+
+                BankModel *listModel = [[BankModel alloc] init];
+                [listModel parseFromDictionary:[listArray objectAtIndex:i]];
+                [requestArray addObject:listModel];
+            }
+
+            [self.cardArr addObjectsFromArray:requestArray];
+
+            [self.m_cardTaleView reloadData];
         }
         else
         {

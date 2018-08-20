@@ -13,4 +13,8 @@
 
 @property(nonatomic,strong)NSString *name;
 @property(nonatomic,strong)NSString *logogram;
+@property(nonatomic,strong)NSString *bank;
+@property(nonatomic,strong)NSString *cardID;
+@property(nonatomic,strong)NSString *bankID;
+@property(nonatomic,strong)NSString *bankname;
 @end

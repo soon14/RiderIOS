@@ -23,9 +23,17 @@
     // Initialization code
 }
 
-- (void)setData:(NSString *)number withName:(NSString *)imageName
+- (void)setData:(NSString *)number withName:(BankModel *)mode
 {
-    self.bcgImage.image = [UIImage imageNamed:imageName];
+   
+    if ([mode.bank isEqualToString:@"ICBC"] || [mode.bank isEqualToString:@"CCB"]|| [mode.bank isEqualToString:@"BOC"]|| [mode.bank isEqualToString:@"ABC"]|| [mode.bank isEqualToString:@"CMB"]|| [mode.bank isEqualToString:@"COMM"]|| [mode.bank isEqualToString:@"JSBANK"]|| [mode.bank isEqualToString:@"JSRCU"]) {
+         self.bcgImage.image = [UIImage imageNamed:mode.bank];
+    }
+    else
+    {
+         self.bcgImage.image = [UIImage imageNamed:@"OTHER"];
+    }
+    self.numberLbl.text = mode.cardID;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

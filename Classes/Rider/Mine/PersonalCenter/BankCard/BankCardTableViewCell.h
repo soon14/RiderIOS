@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BankModel.h"
 
 @interface BankCardTableViewCell : UITableViewCell
 
-- (void)setData:(NSString *)number withName:(NSString *)imageName;
+- (void)setData:(NSString *)number withName:(BankModel *)mode;
 @end

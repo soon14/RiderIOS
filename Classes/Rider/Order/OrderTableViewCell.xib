@@ -107,6 +107,7 @@
                 <outlet property="stadusLbl" destination="VbY-Lw-HMD" id="Tby-0c-oRa"/>
                 <outlet property="take1Lbl" destination="t1D-aA-7Dw" id="VXP-xi-rrq"/>
                 <outlet property="timeLbl" destination="cyQ-G2-kLs" id="kkc-Wz-RTM"/>
+                <outlet property="ydLbl" destination="c7y-kM-Or5" id="xmh-1q-9KU"/>
             </connections>
             <point key="canvasLocation" x="39" y="184.5"/>
         </tableViewCell>

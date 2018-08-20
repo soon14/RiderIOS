@@ -117,7 +117,9 @@ static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
     };
     
     cell.didStatusButton = ^(NSInteger idx) {
-        NSLog(@"Statusidx == %lu",idx);
+//        NSLog(@"Statusidx == %lu",idx);
+        DistributionMode *mode = self.listArr[indexPath.row];
+        [self requestComplete:mode.orderID];
     };
     cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -182,6 +184,59 @@ static NSString *const listCellIndentifier = @"StayDistributionTableViewCell";
             
             [self.listArr addObjectsFromArray:requestArray];
             [self.m_listTaleView reloadData];
+        }
+        else
+        {
+            NSString *errorMessage = [responseDic valueForKey:@"message"];
+            [ShowErrorMgs sendErrorCode:errorMessage withCtr:self];
+        }
+        
+        [self.hubView hideAnimated:YES];
+    } FailureBlock:^(id error) {
+        NSLog(@"error == %@",error);
+        [self.hubView hideAnimated:YES];
+        [ShowErrorMgs sendErrorCode:@"服务器错误，请稍后重试！" withCtr:self];
+    }];
+}
+
+//完成
+- (void)requestComplete:(NSString *)sid
+{
+    
+    [self.hubView showAnimated:YES];
+    
+    //  http://www.pujiante.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=app.delivery.lists.handleapp&openid=&sid=
+    NSMutableDictionary *childDic = [[NSMutableDictionary alloc]init];
+    [childDic setValue:@"3" forKey:@"i"];
+    [childDic setValue:@"entry" forKey:@"c"];
+    [childDic setValue:@"ewei_shopv2" forKey:@"m"];
+    [childDic setValue:@"mobile" forKey:@"do"];
+    [childDic setValue:@"app.delivery.lists.handleapp" forKey:@"r"];
+    [childDic setValue:sid forKey:@"sid"];
+    [childDic setValue:self.appMger.userID forKey:@"openid"];
+    
+    [AFHttpRequestManagement PostHttpDataWithUrlStr:@"" Dic:childDic SuccessBlock:^(id responseObject) {
+        
+        SBJsonParser *json = [[SBJsonParser alloc]init];
+        NSDictionary *responseDic = [json objectWithString:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]];
+        LogInfo(@"responseDic = %@ ",responseDic);
+        
+        int errorCode = [[responseDic valueForKey:@"error"] intValue];
+        if (errorCode == 0)
+        {
+            //            NSArray *listArray = [responseDic valueForKey:@"list"];
+            //            NSMutableArray *requestArray = [[NSMutableArray alloc] initWithCapacity:0];
+            //            for (int i = 0; i<[listArray count]; i++)
+            //            {
+            //                DistributionMode *listModel = [[DistributionMode alloc] init];
+            //                [listModel parseFromDictionary:[listArray objectAtIndex:i]];
+            //                [requestArray addObject:listModel];
+            //            }
+            //
+            //            [self.listArr addObjectsFromArray:requestArray];
+            //            [self.m_listTaleView reloadData];
+            [self.listArr removeAllObjects];
+            [self requestDistribution];
         }
         else
         {
